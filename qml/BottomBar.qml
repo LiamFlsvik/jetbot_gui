@@ -3,7 +3,7 @@ Rectangle {
     id: bottomBar
     anchors.left: parent.left
     anchors.right: parent.right
-    height: parent.height*0.1
+    height: parent.height*0.06
     color: "transparent"
 
     Text {

@@ -15,31 +15,46 @@ ApplicationWindow {
         anchors.right: parent.right;
         anchors.bottom: parent.bottom;
         width: parent.width;
-        height: width;
-
-        DisplayCamera {
-            anchors.horizontalCenter: background.horizontalCenter
-            anchors.bottom: bottomBar.top
-            anchors.bottomMargin: parent.height*0.01            
-        }
+        height: parent.width;
 
         TopBar{
             id:topBar
             anchors.top: parent.top
         }
 
-        Modes{
-            id:modes_
-            anchors.top:topBar.bottom
-            anchors.topMargin:50;
-            anchors.left:parent.left;
-            anchors.leftMargin:50;
-            width:parent.width*0.2; height:parent.height*0.25;
-        }
-
         BottomBar { 
         id: bottomBar
         anchors.bottom: parent.bottom
-        }  
+        } 
+
+        DisplayCamera {
+            anchors.horizontalCenter: background.horizontalCenter
+            anchors.top:topBar.bottom
+            anchors.bottom: bottomBar.top
+            anchors.leftMargin:parent.width*0.01
+            anchors.rightMargin:parent.width*0.01
+            anchors.topMargin:parent.height*0.01
+            anchors.bottomMargin:parent.height*0.01    
+        }
+
+        DisplayMap {
+            anchors.top:topBar.bottom
+            anchors.right:parent.right
+            height:parent.height*0.3
+            width:parent.width*0.3
+        }
+
+        Modes{
+            id:modes_
+            anchors.top:topBar.bottom
+            anchors.topMargin:parent.height*0.01 ;
+            anchors.left:parent.left;
+            anchors.leftMargin:parent.width*0.01 ;
+            width:parent.width*0.1; height:parent.height*0.25;
+        }
+
+
+
+         
     }
 }

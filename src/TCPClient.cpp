@@ -8,9 +8,13 @@ TCPClient::TCPClient(std::string ip_address,int port): io_context_(),
         boost::system::error_code ec;
         socket_.connect(endpoint_,ec);
         if(ec){
-            throw boost::system::error_code(ec);
+            std::cout << "[TCP Client] error code:" << boost::system::error_code(ec);
+            running_=false;
+        } else {
+            std::cout << "[TCP Client] Active\n";
+            running_=true;
         }
-        std::cout << "[TCP Client] Active\n";
+
     }
 
     void TCPClient::receive_frame_from_server(){
@@ -28,12 +32,25 @@ TCPClient::TCPClient(std::string ip_address,int port): io_context_(),
         } else {
             std::unique_lock<std::mutex> lock(frame_mutex_);
             if(!frame.empty()){
-                frame_ = frame;
+                frame_ = opencv_to_qimage(frame);
+                emit frameChanged(frame_);
             }
         }
     }
-    
-    std::vector<uchar> TCPClient::get_frame(){
-        std::unique_lock<std::mutex> lock(frame_mutex_);
-        return frame_;
+    inline QImage TCPClient::opencv_to_qimage(const std::vector<uchar> &encoded_frame){
+             QImage img = QImage::fromData(encoded_frame.data(), encoded_frame.size());
+                if (img.isNull()) {
+                    std::cout << "Qt failed to decode image data";
+                    return QImage();
+                }
+                return img;
+            }
+
+    void TCPClient::run(){
+        while(running_){
+            receive_frame_from_server();
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        }
     }
+    
+

@@ -1,40 +1,42 @@
-import QtQuick 6.9
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.0
+import QtQuick
+import QtQuick.Controls.Basic
+// https://doc.qt.io/qt-6/qtquickcontrols-customize.html
 
-
-Switch {
+CheckBox {
     id: control
-    font.family: "Informe"
-    font.pixelSize: 18
-    checked: false
-    property bool on:false
-    property real scale: 1
-    
+    text: qsTr("CheckBox")
+    checked: true
+    width:parent.width
+    height:parent.height
+
     indicator: Rectangle {
-        implicitWidth: 48*scale
-        implicitHeight: 26*scale
+        id:button_outer
+        width: parent.height*0.9
+        height: parent.height*0.9
         x: control.leftPadding
         y: parent.height / 2 - height / 2
-        radius: 13
-        color: control.checked ? "#17a81a" : "#ffffff"
-        border.color: control.checked ? "#17a81a" : "#cccccc"
-        Rectangle {
-            x: control.checked ? parent.width - width : 0
-            width: 26*scale
-            height: 26*scale
-            radius: height/2
-            color: control.down ? "#cccccc" : "#ffffff"
-            border.color: control.checked ? (control.down ? "#1719a8ff" : "#2e21beff") : "#999999"
-        }
+        radius: 3
+        border.color: control.down ? "#17a81a" : "#21be2b"
 
+        Rectangle {
+            id: button_inner
+            width: button_outer.width/2
+            height: button_outer.height/2
+            x: 6
+            y: 6
+            radius: 2
+            color: control.down ? "#17a81a" : "#21be2b"
+            visible: control.checked
+        }
     }
+
     contentItem: Text {
         text: control.text
         font: control.font
         opacity: enabled ? 1.0 : 0.3
-        //color: control.down ? "#000000ff" : "#21be2b"
+        color: control.down ? "#17a81a" : "#21be2b"
         verticalAlignment: Text.AlignVCenter
         leftPadding: control.indicator.width + control.spacing
     }
 }
+

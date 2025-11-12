@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(user_interface)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -20,8 +20,8 @@ qt_add_executable(GUI
     main.cpp
     src/Backend.cpp include/Backend.hpp
     src/TCPClient.cpp include/TCPClient.hpp
+    src/VideoProvider.cpp include/VideoProvider.hpp
 )
-
 
 qt_add_resources(GUI "app_images"
     PREFIX "/"
@@ -49,9 +49,8 @@ QML_FILES
     qml/TopBar.qml
     qml/Modes.qml
     qml/CustomSwitch.qml
+    qml/DisplayMap.qml
 )
 
 target_include_directories(GUI PRIVATE ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(GUI PRIVATE Qt6::Quick ${OpenCV_LIBS} boost::boost)
-#set(QT_QML_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/qml" CACHE PATH "Install path for QML" FORCE)
-#set(QML_IMPORT_PATH ${CMAKE_BINARY_DIR}/qml CACHE STRING "Extra QML Import Paths" FORCE)
