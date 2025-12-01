@@ -1,4 +1,5 @@
 import QtQuick 6.9
+import QtGraphs
 Rectangle{
     color: "transparent"
     width: parent.width
@@ -9,15 +10,10 @@ Rectangle{
         anchors.left:parent.left
         anchors.top:parent.top;
         id: rect1
-        color:"#6a89cc"
+        color:"transparent"
         width: parent.width
         height: parent.height
-        Image{
-            anchors.fill:parent
-            id: cameraImage
-            source: "qrc:/qml/images/lidar.jpeg"
-            fillMode: Image.Stretch
-        }
+        
     }
 }
 

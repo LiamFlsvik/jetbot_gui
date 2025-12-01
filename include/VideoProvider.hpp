@@ -2,7 +2,6 @@
 #include <QImage>
 #include <QMutex>
 
-#include <opencv2/opencv.hpp>
 
 
 class VideoProvider : public QQuickImageProvider {

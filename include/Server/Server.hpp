@@ -1,0 +1,33 @@
+#ifndef JETRACERTCP_SERVER_HPP
+#define JETRACERTCP_SERVER_HPP
+
+#include <boost/asio.hpp>
+#include "JetbotData.hpp"
+#include "ServerData.hpp"
+
+class Server {
+public:
+
+    void connectionHandler(boost::asio::ip::tcp::socket socket);
+
+    void listener(const unsigned long &port);
+
+    std::atomic<bool> shouldStop{false};
+
+    data::JetbotData jetbotData;
+    data::ServerData serverData;
+
+    std::mutex jetbotDataMutex;
+    std::mutex serverDataMutex;
+
+    std::condition_variable jetbotDataCV;
+    std::condition_variable serverDataCV;
+
+    std::atomic<bool> newJetbotData;
+    std::atomic<bool> newServerData;
+private:
+
+};
+
+
+#endif //JETRACERTCP_SERVER_HPP

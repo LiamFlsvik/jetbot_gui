@@ -6,23 +6,26 @@
 #include <qobject.h>
 #include <QThread>
 #include <string>
-#include "TCPClient.hpp"
+#include "include/JetBot.hpp"
+
 #include "VideoProvider.hpp"
 
 int main(int argc, char *argv[])
-{
+{   
+    glfwInit();
     QGuiApplication app(argc,argv);
     QQmlApplicationEngine engine;   
- 
-    TCPClient tcp_client("127.0.0.1",8080);
+    JetBot jetbot("10.22.140.237",8080,false,nullptr);
+    QThread jetbot_thread;
+    jetbot.moveToThread(&jetbot_thread);
+
+    QObject::connect(&jetbot_thread, &QThread::started, &jetbot,&JetBot::run);
+
+    jetbot_thread.start();
+
     VideoProvider video_provider;
-    QThread tcp_client_thread;
 
-    tcp_client.moveToThread(&tcp_client_thread);
-
-    QObject::connect(&tcp_client_thread,&QThread::started, &tcp_client, &TCPClient::run);
-
-    QObject::connect(&tcp_client,&TCPClient::frameChanged,&video_provider,&VideoProvider::updateFrame);
+    QObject::connect(&jetbot,&JetBot::frame_changed,&video_provider,&VideoProvider::updateFrame);
     engine.addImageProvider("videoprovider", &video_provider);
 
     Backend backend;
@@ -30,7 +33,9 @@ int main(int argc, char *argv[])
     
     engine.load(QUrl(QStringLiteral("qrc:/gui_uri/qml/Main.qml")));
     QQmlContext *rootContext = engine.rootContext();
-    tcp_client_thread.start();
+    //tcp_client_thread.start();
+
+
 
     return app.exec();
     

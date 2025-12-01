@@ -6,10 +6,11 @@ import gui_uri 1.0
 
 Rectangle{
     color:"#ffffffff"
+    opacity: 0.9
     width:parent.width;
     height:parent.height;
     radius: 10
-    
+
         ColumnLayout{
             spacing: 2
             anchors.fill: parent
@@ -28,6 +29,7 @@ Rectangle{
             }
 
             ComboBox {
+                id: combo_box_vision_mode
                 editable: false
                 textRole: "vision_mode"
                 model: ListModel {
@@ -40,7 +42,12 @@ Rectangle{
                     if (find(editText) === -1)
                         model.append({text: editText})
                 }
+                onActivated: {
+                    backend.setDetectionMode(combo_box_vision_mode.currentValue)
+                    
+                }
             }
         }
+        
     }
 

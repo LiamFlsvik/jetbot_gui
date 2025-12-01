@@ -1,4 +1,8 @@
 import QtQuick 6.9
+
+import QtQuick.Controls
+import QtQuick.Layouts 1.0
+import gui_uri 1.0
 Rectangle {
     id: bottomBar
     anchors.left: parent.left
@@ -17,7 +21,9 @@ Rectangle {
         fillMode: Image.Stretch    // Stretch to fill (may distort)
     }
     
-     Row{
+    
+    
+    Row{
         anchors.fill:parent
         anchors.rightMargin: parent.width*0.01
         spacing: parent.width*0.4
@@ -30,17 +36,17 @@ Rectangle {
             anchors.verticalCenter:parent.verticalCenter
             color:"transparent"
             Image{
-                id: batteryIcon
+                id: screenshot_button
                 anchors.fill:parent
                 source: "qrc:/qml/images/camera.png"
                 fillMode: Image.PreserveAspectFit
                 HoverHandler{
                 onHoveredChanged: {
                     if(hovered){
-                        batteryIcon.scale = 1.1
+                        screenshot_button.scale = 1.1
                     }
                     else{
-                        batteryIcon.scale = 1                        
+                        screenshot_button.scale = 1                        
                     }
                 }
             }
@@ -51,21 +57,114 @@ Rectangle {
             id: ipAddress
             width:bottomBar.width*0.05
             height:bottomBar.height*0.7
-            anchors.rightMargin:ipAddressText.width
             anchors.verticalCenter:parent.verticalCenter
             color:"transparent"
             
 
-            Text{
-                id: ipAddressText
-                anchors.centerIn:parent
-                width:ipAddress.width
-                height:ipAddress.height;
-                font.pixelSize:parent.height *0.7
-                text: "Test"
-                font.family: "Informe"
-                font.bold: true
+            Image{
+                id: mode_menu
+                anchors.fill:parent
+                source: "qrc:/qml/images/mode_menu.png"
+                fillMode: Image.PreserveAspectFit
+                scale: 1.5
+                HoverHandler{
+                onHoveredChanged: {
+                    if(hovered){
+                        mode_menu.scale = 1.8
+                    }
+                    else{
+                        mode_menu.scale = 1.5                 
+                    }
+                }
+            }
             }
         }
-}
+        Rectangle{
+            id: pid_menu_icon
+            width:bottomBar.width*0.05
+            height:bottomBar.height*0.7
+            anchors.verticalCenter:parent.verticalCenter
+            color:"transparent"
+            Image{
+                id: pid_menu_image
+                anchors.fill:parent
+                source: "qrc:/qml/images/pid_menu_up.png"
+                fillMode: Image.PreserveAspectFit
+                HoverHandler{
+                onHoveredChanged: {
+                    if(hovered){
+                        pid_menu_image.scale = 1.1
+                    }
+                    else{
+                        pid_menu_image.scale = 1                        
+                       }
+                    }
+                }
+                MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                onClicked: {
+                    pid_settings.open()
+                    }
+                }
+            }
+        }
+    }
+    Popup {
+        id: pid_settings
+        parent: bottomBar.parent.parent
+        modal: true
+        focus: false
+        x: pid_menu_icon.x + pid_menu_icon.width / 2 
+        y: bottomBar.y - implicitHeight 
+        background: Rectangle {
+            color: "black"
+            radius: 5
+        }
+        ColumnLayout {
+            Button{
+                text: "Send PID Gains"
+                
+            }
+           
+            id: pid_settings_column
+            RowLayout {
+                spacing: 10
+                DoubleSpinBox {
+                    id: kp1
+                    realValue: 1
+                    realStepSize: 0.025
+                }
+                DoubleSpinBox {
+                    id: ki1
+                    realValue: 1
+                    realStepSize: 0.1
+                }
+                DoubleSpinBox {
+                    id: kd1
+                    realValue: 1
+                    realStepSize: 0.1
+                    }
+                }
+
+            RowLayout {
+                spacing: 10
+                DoubleSpinBox {
+                    id: kp2
+                    realValue: 1
+                    realStepSize: 0.1
+                }
+                DoubleSpinBox {
+                    id: ki2
+                    realValue: 1
+                    realStepSize: 0.1
+                }
+                DoubleSpinBox {
+                    id: kd2
+                    realValue: 1
+                    realStepSize: 0.1
+                    }
+                }
+        }
+    }
 }

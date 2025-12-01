@@ -8,7 +8,7 @@ ApplicationWindow {
 	width: Screen.width;
 	height: Screen.height;
 	visible: true
-	title: "Jetson GUI"
+	title: "JetBot User Interface"
 	
     Background {
         id: background;
@@ -21,6 +21,7 @@ ApplicationWindow {
             id:topBar
             anchors.top: parent.top
         }
+        
 
         BottomBar { 
         id: bottomBar
@@ -40,7 +41,7 @@ ApplicationWindow {
         DisplayMap {
             anchors.top:topBar.bottom
             anchors.right:parent.right
-            height:parent.height*0.3
+            height:parent.height*0.2
             width:parent.width*0.3
         }
 
@@ -50,7 +51,7 @@ ApplicationWindow {
             anchors.topMargin:parent.height*0.01 ;
             anchors.left:parent.left;
             anchors.leftMargin:parent.width*0.01 ;
-            width:parent.width*0.1; height:parent.height*0.25;
+            width:parent.width*0.1; height:parent.height*0.35;
         }
 
 

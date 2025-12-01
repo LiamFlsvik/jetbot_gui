@@ -30,17 +30,36 @@ Rectangle {
             anchors.fill:parent
             source: "qrc:/qml/images/stack.png"
             fillMode: Image.PreserveAspectFit
+            
             HoverHandler{
                 onHoveredChanged: {
                     if(hovered){
                         stackImage.scale = 1.2
                         stackImage.source = "qrc:/qml/images/stack2.png"
+                        
                     }
                     else{
                         stackImage.scale = 1
                         stackImage.source = "qrc:/qml/images/stack.png";
                         }
                     }
+                }
+            MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                onClicked: {
+                    contextMenu.open()
+                }
+            }
+            }
+             
+            Menu {
+                id: contextMenu
+                y: stackImage.height*1.1
+                
+                MenuItem {
+                    text: "Exit"
+                    onTriggered: Qt.quit()
                 }
             }
         }
@@ -61,18 +80,56 @@ Rectangle {
             Image{
                 id: batteryIcon
                 anchors.fill:parent
-                source: "qrc:/qml/images/battery100.png"
+                source: "qrc:/qml/images/battery/battery100.png"
                 fillMode: Image.PreserveAspectFit
-                HoverHandler{
-                onHoveredChanged: {
-                    if(hovered){
-                        batteryIcon.scale = 1.2
-                    }
-                    else{
-                        batteryIcon.scale = 1                        
-                        }
-                    }
-                }
+                // https://wiki.qt.io/QML_States_Controlling
+                //
+                //states : [
+                //    State {
+                //        name: "100"
+                //        PropertyChanges {target:batteryIcon; source:"qrc:/qml/images/battery100.png"}
+                //    },
+                //    State {
+                //        name: "90"
+                //        PropertyChanges {target:batteryIcon; source:"qrc:/qml/images/battery90.png"}
+                //    },
+                //    State {
+                //        name: "80"
+                //        PropertyChanges {target:batteryIcon; source:"qrc:/qml/images/battery80.png"}
+                //    },
+                //    State {
+                //        name: "60"
+                //        PropertyChanges {target:batteryIcon; source:"qrc:/qml/images/battery60.png"}
+                //    },
+                //    State {
+                //        name: "50"
+                //        PropertyChanges {target:batteryIcon; source:"qrc:/qml/images/battery50.png"}
+                //    },
+                //    State {
+                //        name: "40"
+                //        PropertyChanges {target:batteryIcon; source:"qrc:/qml/images/battery40.png"}
+                //    },
+                //    State {
+                //        name: "25"
+                //        PropertyChanges {target:batteryIcon; source:"qrc:/qml/images/battery25.png"}
+                //    },
+                //    State {
+                //        name: "10"
+                //        PropertyChanges {target:batteryIcon; source:"qrc:/qml/images/battery10.png"}
+                //    }
+                //]
+                //Timer {
+                //    id:battery_check_timer
+                //    interval:2000
+                //    running:true
+                //    repeat:true
+                //    onTriggered: {
+                //        if(backend.getBatteryPercentage()>90){
+                //            batteryIcon.
+                //        }
+                //    }
+                //}
+                
             }
         }
         Rectangle{
