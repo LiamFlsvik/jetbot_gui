@@ -2,8 +2,8 @@
 #define JETRACERTCP_SERVER_HPP
 
 #include <boost/asio.hpp>
-#include "JetbotData.hpp"
-#include "ServerData.hpp"
+#include "Structs/JetbotData.hpp"
+#include "Structs/ServerData.hpp"
 
 class Server {
 public:
@@ -11,7 +11,7 @@ public:
     void connectionHandler(boost::asio::ip::tcp::socket socket);
 
     void listener(const unsigned long &port);
-
+    void setMotionCommand(data::Motion motion);
     std::atomic<bool> shouldStop{false};
 
     data::JetbotData jetbotData;

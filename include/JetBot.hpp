@@ -1,6 +1,6 @@
 #pragma once
 #include "Server/Server.hpp"
-#include "Server/JetbotData.hpp"
+#include "Structs/JetbotData.hpp"
 #include "Joystick/JoystickHandler.hpp"
 #include "VideoStream/VideoReceiver.hpp"
 #include <QObject>
@@ -17,8 +17,8 @@ class JetBot : public QObject{
 
         void run();
 
-        void send_image(std::vector<unsigned char> frame);
-        inline QImage convert_to_qimage(const std::vector<unsigned char> &encoded_frame);
+        void send_image(cv::Mat frame);
+        inline QImage convert_to_qimage(const cv::Mat &mat);
     signals:
         void frame_changed(const QImage frame_);
 
@@ -27,13 +27,13 @@ class JetBot : public QObject{
         std::thread server_thread_;
         std::thread joystick_handler_thread_;
         
-
         Server server_;
         JoystickHandler joystick_handler_;
         VideoReceiver video_receiver_fpv_;
 
         std::atomic<bool> simulator_mode_;
         std::atomic<bool> is_running_{};
-
+        data::Motion motion_command_{};
+        
 
 };

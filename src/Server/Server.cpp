@@ -40,7 +40,7 @@ void Server::connectionHandler(boost::asio::ip::tcp::socket socket) {
     std::mutex receivedMsgMutex;
     std::condition_variable receivedMsgCV;
     std::vector<std::uint8_t> receivedMsg;
-    // Lese Json
+    // Read Json
 
     std::thread readThread([this, &socket, &receivedMsg, &receivedMsgMutex, &receivedMsgCV] {
         while(!shouldStop.load() && socket.is_open()) {
@@ -181,4 +181,13 @@ void Server::connectionHandler(boost::asio::ip::tcp::socket socket) {
     if (readHandler.joinable())     readHandler.join();
     if (senderThread.joinable())    senderThread.join();
 
+}
+
+void Server::setMotionCommand(data::Motion motion){
+    std::unique_lock<std::mutex> lock(serverDataMutex);
+    serverData.motion = motion;
+    if(!newServerData.load()){
+        serverDataCV.notify_all();
+        newServerData = true;
+    }
 }

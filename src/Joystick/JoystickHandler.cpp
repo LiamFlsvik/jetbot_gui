@@ -31,7 +31,7 @@ void JoystickHandler::run(){
                 get_joystick_values();
                 calculate_motion_command();
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(20));
+            
         }
     });
 }
@@ -44,10 +44,10 @@ void JoystickHandler::get_joystick_values(){
         joystick_commands_.left_trigger=   add_deadband(joystick_.getAxis(3), 0.09);
         joystick_commands_.right_trigger=  add_deadband(joystick_.getAxis(4), 0.09);
     } else {
-        joystick_commands_.left_stick_x =  add_deadband(joystick_.getAxis(0),0.2);
-        joystick_commands_.left_stick_y =  add_deadband(joystick_.getAxis(1),0.2);
-        joystick_commands_.right_stick_x=  add_deadband(joystick_.getAxis(3),0.2);
-        joystick_commands_.right_stick_y =  add_deadband(joystick_.getAxis(4),0.2);
+        joystick_commands_.left_stick_x =  -add_deadband(joystick_.getAxis(0),0.2); //Inverted
+        joystick_commands_.left_stick_y =  -add_deadband(joystick_.getAxis(1),0.2); //Inverted
+        joystick_commands_.right_stick_x=  add_deadband(joystick_.getAxis(2),0.2);
+        joystick_commands_.right_stick_y = -add_deadband(joystick_.getAxis(3),0.2); //Inverted
     }
 }
 
@@ -55,27 +55,19 @@ void JoystickHandler::calculate_motion_command(){
     if(!chinese_controller_){
         motion_commands_.angular_z = joystick_commands_.left_stick_x*scale_angular_;
         motion_commands_.linear_x  = (joystick_commands_.right_trigger-std::abs(joystick_commands_.left_trigger))*scale_linear_;
-        //debug(); 
     } else {
-        //too lazy to add logic for the shitty chinese controller 
+        motion_commands_.angular_z = joystick_commands_.left_stick_x*scale_angular_*5;
+        motion_commands_.linear_x  = joystick_commands_.right_stick_y*scale_linear_;
+        //debug(); 
+        //std::cout << "linear: " << motion_commands_.linear_x << "   angular" << motion_commands_.angular_z << "\n";
     }
 }
 void JoystickHandler::debug(){
-    std::cout << "[JoystickValues] "
-              << "LX: " << joystick_commands_.left_stick_x << "  "
-              << "LY: " << joystick_commands_.left_stick_y << "  "
-              << "RX: " << joystick_commands_.right_stick_x;
-
-    if (!chinese_controller_) {
-        std::cout << "  LT: " << joystick_commands_.left_trigger
-                  << "  RT: " << joystick_commands_.right_trigger;
-    } else {
-        std::cout << "  RY: " << joystick_commands_.right_stick_y;
+    for(int i= 0; i<10; i++){
+        std::cout << "C_" << i << " = " << joystick_.getAxis(i) << "  ";
     }
 
     std::cout << std::endl;
-
-
 }
 
 inline float JoystickHandler::add_deadband(float axis, float deadband){
@@ -92,10 +84,12 @@ inline float JoystickHandler::add_deadband(float axis, float deadband){
     return 0.0;
 }
 
-MotionCommands JoystickHandler::get_motion_command(){
+data::Motion JoystickHandler::get_motion_command(){
 
     std::lock_guard<std::mutex> lock(motion_command_mutex_);
     return motion_commands_;
 }
+
+
 
 

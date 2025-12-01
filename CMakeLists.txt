@@ -50,12 +50,11 @@ qt_add_executable(GUI
     src/VideoProvider.cpp include/VideoProvider.hpp
     src/JetBot.cpp include/JetBot.hpp    
     src/Server/Server.cpp include/Server/Server.hpp
-    include/Server/JetbotData.hpp
-    include/Server/ServerData.hpp
     src/Joystick/Joystick.cpp include/Joystick/Joystick.hpp
     src/Joystick/JoystickHandler.cpp include/Joystick/JoystickHandler.hpp
     src/VideoStream/VideoReceiver.cpp include/VideoStream/VideoReceiver.hpp
-    include/Joystick/MotionCommands.hpp
+    include/Structs/JetbotData.hpp
+    include/Structs/ServerData.hpp
     include/Joystick/JoystickCommands.hpp
 )
 

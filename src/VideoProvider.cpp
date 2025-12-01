@@ -14,7 +14,7 @@ VideoProvider::VideoProvider(): QQuickImageProvider(QQuickImageProvider::Image){
     void VideoProvider::updateFrame(const QImage frame){
         QMutexLocker locker(&mutex_);
         if (frame.isNull()) {
-        std::cout << "[VideoProvider] updateFrame:frame was null" << std::endl;
+        //std::cout << "[VideoProvider] updateFrame:frame was null" << std::endl;
         } else {
             m_frame_ = frame;
             //std::cout << "[VideoProvider] updateFrame:frame updated!\n";

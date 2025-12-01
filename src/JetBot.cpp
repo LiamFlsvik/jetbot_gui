@@ -19,22 +19,23 @@ JetBot::~JetBot(){
         server_thread_ = std::thread([this] {this->server_.listener(this->port_);}); 
         joystick_handler_.run();
         video_receiver_fpv_.run();
+
         while(true){
             send_image(video_receiver_fpv_.getFrame());
-            //std::this_thread::sleep_for(std::chrono::milliseconds(33));
+            server_.setMotionCommand(joystick_handler_.get_motion_command());
         }
 
     }
-    inline QImage JetBot::convert_to_qimage(const std::vector<uchar> &encoded_frame){
-        QImage img = QImage::fromData(encoded_frame.data(), encoded_frame.size());
-            if (img.isNull()) {
-                std::cout << "Qt failed to decode image data";
-                return QImage();
-            }
-            return img;
+    inline QImage JetBot::convert_to_qimage(const cv::Mat &mat){
+        QImage img = QImage((uchar*) mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888).rgbSwapped();
+        if (img.isNull()) {
+            //std::cout << "Qt failed to decode image data";
+            return QImage();
+        }
+        return img;
         }
     
-    void JetBot::send_image(std::vector<uchar> frame){
+    void JetBot::send_image(cv::Mat frame){
         try {
             QImage q_image = convert_to_qimage(frame);
             frame_changed emit(q_image);

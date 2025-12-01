@@ -6,8 +6,8 @@
 namespace data {
     struct Motion {
         std::string command{"stop"};
-        double linear_x{0.0};
-        double angular_z{0.0};
+        float linear_x{0.0};
+        float angular_z{0.0};
     };
 
     struct ServerData {

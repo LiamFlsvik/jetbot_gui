@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     glfwInit();
     QGuiApplication app(argc,argv);
     QQmlApplicationEngine engine;   
-    JetBot jetbot("10.22.140.237",8080,false,nullptr);
+    JetBot jetbot("10.22.140.237",2468,true,nullptr);
     QThread jetbot_thread;
     jetbot.moveToThread(&jetbot_thread);
 

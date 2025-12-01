@@ -21,11 +21,11 @@ public:
 
     bool shouldClose{false};
     
-    std::vector<unsigned char> getFrame();
-    void setFrame(std::vector <unsigned char>);
+    cv::Mat getFrame();
+    void setFrame(cv::Mat frame);
 
 private:
-    std::vector<unsigned char> frame_;
+    cv::Mat frame_;
     boost::asio::io_context ioContext;
     boost::asio::ip::udp::endpoint ep;
     boost::asio::ip::udp::socket s;
@@ -42,7 +42,7 @@ private:
     std::uint16_t cols = 0;
 
     std::uint16_t chunksRecieved = 0;
-
+    
 };
 
 
