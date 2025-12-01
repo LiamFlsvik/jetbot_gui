@@ -18,8 +18,6 @@ namespace JetBotMessages {
         bool foo;
         std::string voo;
         
-
-
     } ;
 
 

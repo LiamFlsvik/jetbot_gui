@@ -1,6 +1,6 @@
 #include "VideoStream/VideoReceiver.hpp"
 
-VideoReceiver::VideoReceiver() : ep(boost::asio::ip::udp::v4(), 44444), s(ioContext, ep), frameVector(1920*1080*3) {
+VideoReceiver::VideoReceiver() : ep(asio::ip::udp::v4(), 44444), s(ioContext, ep), frameVector(1920*1080*3) {
     if (s.is_open()) std::cout << "socket åpnet" << std::endl;
     //for (auto &byte : frameVector) byte = 0x00;
 }
@@ -19,7 +19,7 @@ void VideoReceiver::run() {
                 //std::cout << "mottar" << std::endl;
 
                 std::vector<uint8_t> payload(4 + pkgSize);
-                size_t bytes = s.receive_from(boost::asio::buffer(payload), remoteEndpoint, 0, ec);
+                size_t bytes = s.receive_from(asio::buffer(payload), remoteEndpoint, 0, ec);
 
                 std::uint16_t thisChunkNumber = 0;
                 std::uint16_t thisChunkSize = 0;
@@ -36,7 +36,7 @@ void VideoReceiver::run() {
                         //std::vector<uint8_t> payloadChunk(4+thisChunkSize);
 
 
-                        //size_t bytes = s.receive_from(boost::asio::buffer(payload), remoteEndpoint, 0, ec);
+                        //size_t bytes = s.receive_from(asio::buffer(payload), remoteEndpoint, 0, ec);
                         //frameVector.insert(frameVector.end(), payloadChunk.begin(), payloadChunk.end());
 
                     if(bytes<4 || bytes > pkgSize+4) {

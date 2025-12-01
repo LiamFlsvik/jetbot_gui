@@ -11,7 +11,6 @@ JetBot::~JetBot(){
     if (server_thread_.joinable()){
         server_thread_.join();
     }
-   
     is_running_ = false;
 }
 
@@ -20,12 +19,12 @@ JetBot::~JetBot(){
         joystick_handler_.run();
         video_receiver_fpv_.run();
 
-        while(true){
+        while(is_running_){
             send_image(video_receiver_fpv_.getFrame());
             server_.setMotionCommand(joystick_handler_.get_motion_command());
         }
-
     }
+    
     inline QImage JetBot::convert_to_qimage(const cv::Mat &mat){
         QImage img = QImage((uchar*) mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888).rgbSwapped();
         if (img.isNull()) {

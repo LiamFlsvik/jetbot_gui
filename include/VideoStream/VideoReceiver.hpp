@@ -2,7 +2,7 @@
 #define VIDEOSTREAM_VIDEORECEIVER_HPP
 
 #include <opencv2/opencv.hpp>
-#include <boost/asio.hpp>
+#include <asio.hpp>
 #include <chrono>
 #include <iostream>
 
@@ -26,14 +26,14 @@ public:
 
 private:
     cv::Mat frame_;
-    boost::asio::io_context ioContext;
-    boost::asio::ip::udp::endpoint ep;
-    boost::asio::ip::udp::socket s;
+    asio::io_context ioContext;
+    asio::ip::udp::endpoint ep;
+    asio::ip::udp::socket s;
 
     std::thread t;
 
-    boost::asio::ip::udp::endpoint remoteEndpoint;
-    boost::system::error_code ec;
+    asio::ip::udp::endpoint remoteEndpoint;
+    std::error_code ec;
 
     std::vector<std::uint8_t> frameVector;
 

@@ -4,27 +4,27 @@
 #include <thread>
 
 void Server::listener(const unsigned long &port) {
-    boost::asio::io_context ioContext;
-    //boost::asio::ip::tcp::endpoint serverCredentials(boost::asio::ip::make_address(ipAddress), port);
-    boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::tcp::v4(), static_cast<unsigned short>(port));
+    asio::io_context ioContext;
+    //asio::ip::tcp::endpoint serverCredentials(asio::ip::make_address(ipAddress), port);
+    asio::ip::tcp::endpoint endpoint(asio::ip::tcp::v4(), static_cast<unsigned short>(port));
 
-    boost::asio::ip::tcp::acceptor globalAcceptor(ioContext, endpoint);
+    asio::ip::tcp::acceptor globalAcceptor(ioContext, endpoint);
 
     std::vector<std::thread> threadPool;
     
     while(!shouldStop.load()){
-        boost::asio::ip::tcp::socket socket(ioContext);
+        asio::ip::tcp::socket socket(ioContext);
 
         std::cout << "Waiting for connection..." << std::endl;
 
         try {
             globalAcceptor.accept(socket);
-        } catch(boost::system::system_error &e) {
+        } catch(std::system_error &e) {
             continue;
         }
 
         threadPool.emplace_back(std::thread([this, s = std::move(socket)]() mutable {
-            boost::asio::ip::tcp::endpoint remoteEndpoint = s.remote_endpoint();
+            asio::ip::tcp::endpoint remoteEndpoint = s.remote_endpoint();
             std::cout << "New connection from: "    << remoteEndpoint.address().to_string();
             std::cout << ":"                        << remoteEndpoint.port() << std::endl;
             Server::connectionHandler(std::move(s));
@@ -36,7 +36,7 @@ void Server::listener(const unsigned long &port) {
 }
 
 
-void Server::connectionHandler(boost::asio::ip::tcp::socket socket) {
+void Server::connectionHandler(asio::ip::tcp::socket socket) {
     std::mutex receivedMsgMutex;
     std::condition_variable receivedMsgCV;
     std::vector<std::uint8_t> receivedMsg;
@@ -47,16 +47,16 @@ void Server::connectionHandler(boost::asio::ip::tcp::socket socket) {
             try {
                 std::uint32_t sizeOfMsg;
 
-                boost::asio::read(socket, boost::asio::buffer(&sizeOfMsg, 4));
+                asio::read(socket, asio::buffer(&sizeOfMsg, 4));
 
                 {
                     std::unique_lock<std::mutex> lock(receivedMsgMutex);
                     receivedMsg.resize(sizeOfMsg);
-                    boost::asio::read(socket, boost::asio::buffer(receivedMsg.data(), sizeOfMsg));
+                    asio::read(socket, asio::buffer(receivedMsg.data(), sizeOfMsg));
                     receivedMsgCV.notify_all();
                 }
 
-            } catch(boost::system::system_error &e) {
+            } catch(std::system_error &e) {
                 std::cout << "[Server] Boost system error on read" << e.what() << std::endl;
 
                 socket.close();
@@ -163,8 +163,8 @@ void Server::connectionHandler(boost::asio::ip::tcp::socket socket) {
                 package.insert(package.end(), header.begin(), header.end());
                 package.insert(package.end(), tempMsgPck.begin(), tempMsgPck.end());
 
-                boost::asio::write(socket, boost::asio::buffer(package));
-            } catch(const boost::system::system_error &e) {
+                asio::write(socket, asio::buffer(package));
+            } catch(const std::system_error &e) {
                 std::cout << "[Server] Boost system error on write" << e.what() << std::endl;
 
                 socket.close();

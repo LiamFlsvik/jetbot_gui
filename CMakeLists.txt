@@ -35,12 +35,14 @@ FetchContent_Declare(
 )
 
 FetchContent_Declare(
-        boost
-        GIT_REPOSITORY https://github.com/boostorg/boost.git
-        GIT_TAG boost-1.89.0
+		asio
+		GIT_REPOSITORY https://github.com/chriskohlhoff/asio.git
+		GIT_TAG asio-1-30-2
+		GIT_SHALLOW TRUE
 )
 
-FetchContent_MakeAvailable(nlohmann_json glfw boost)
+
+FetchContent_MakeAvailable(nlohmann_json glfw asio)
 
 qt_standard_project_setup(REQUIRES 6.4)
 
@@ -57,6 +59,8 @@ qt_add_executable(GUI
     include/Structs/ServerData.hpp
     include/Joystick/JoystickCommands.hpp
 )
+
+
 
 qt_add_resources(GUI "app_images"
     PREFIX "/"
@@ -93,6 +97,9 @@ QML_FILES
 target_include_directories(GUI 
     PRIVATE ${CMAKE_SOURCE_DIR}/include
     PRIVATE ${OpenCV_INCLUDE_DIRS}
+    PRIVATE ${asio_SOURCE_DIR}/asio/include
 )
 
-target_link_libraries(GUI PRIVATE Qt6::Quick Qt6::Widgets ${OpenCV_LIBS} Boost::asio nlohmann_json::nlohmann_json Threads::Threads glfw)
+
+target_link_libraries(GUI PRIVATE Qt6::Quick Qt6::Widgets ${OpenCV_LIBS} nlohmann_json::nlohmann_json Threads::Threads glfw)
+target_compile_definitions(GUI PUBLIC ASIO_STANDALONE)
