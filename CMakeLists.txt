@@ -10,7 +10,7 @@ set(CMAKE_AUTORCC ON)
 add_compile_definitions(PROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 
 
-find_package(Qt6 6.4 COMPONENTS Quick Qml Widgets Graphs REQUIRED) # TODO: remvove graphs
+find_package(Qt6 6.4 COMPONENTS Quick Qml Widgets REQUIRED)
 find_package(ZLIB REQUIRED)
 
 
@@ -95,4 +95,4 @@ target_include_directories(GUI
     PRIVATE ${OpenCV_INCLUDE_DIRS}
 )
 
-target_link_libraries(GUI PRIVATE Qt6::Quick Qt6::Widgets Qt6::Graphs ${OpenCV_LIBS} boost::boost nlohmann_json::nlohmann_json glfw)
+target_link_libraries(GUI PRIVATE Qt6::Quick Qt6::Widgets ${OpenCV_LIBS} boost::boost nlohmann_json::nlohmann_json glfw)
