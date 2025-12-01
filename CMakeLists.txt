@@ -10,15 +10,17 @@ set(CMAKE_AUTORCC ON)
 add_compile_definitions(PROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 
 
-find_package(Qt6 6.4 COMPONENTS Quick Qml Widgets Graphs REQUIRED) # TODO: remvove graphs
-find_package(ZLIB REQUIRED)
+find_package(Qt6 6.4 COMPONENTS Quick Qml Widgets REQUIRED)
 
-
+find_package(Threads REQUIRED)
 
 #find_package(OpenCV REQUIRED)
 #include_directories(${OpenCV_INCLUDE_DIRS})
-find_package(Boost REQUIRED)
+#find_package(Boost REQUIRED)
+
 find_package(OpenCV REQUIRED)
+
+
 include(FetchContent)
 FetchContent_Declare(
     nlohmann_json
@@ -26,20 +28,19 @@ FetchContent_Declare(
     GIT_TAG v3.12.0
 )
 
-set(THREEPP_BUILD_TESTS OFF)
-set(THREEPP_BUILD_EXAMPLES OFF)
 FetchContent_Declare(
-        threepp
-        GIT_REPOSITORY https://github.com/markaren/threepp.git
-        GIT_TAG 619cdaa
-)
-FetchContent_Declare(
-        assimp
-        GIT_REPOSITORY https://github.com/assimp/assimp.git
-        GIT_TAG v6.0.2
+        glfw
+        GIT_REPOSITORY "https://github.com/glfw/glfw.git"
+        GIT_TAG "3.3.7"
 )
 
-FetchContent_MakeAvailable(nlohmann_json threepp assimp)
+FetchContent_Declare(
+        boost
+        GIT_REPOSITORY https://github.com/boostorg/boost.git
+        GIT_TAG boost-1.89.0
+)
+
+FetchContent_MakeAvailable(nlohmann_json glfw boost)
 
 qt_standard_project_setup(REQUIRES 6.4)
 
@@ -95,4 +96,4 @@ target_include_directories(GUI
     PRIVATE ${OpenCV_INCLUDE_DIRS}
 )
 
-target_link_libraries(GUI PRIVATE Qt6::Quick Qt6::Widgets Qt6::Graphs ${OpenCV_LIBS} boost::boost nlohmann_json::nlohmann_json glfw)
+target_link_libraries(GUI PRIVATE Qt6::Quick Qt6::Widgets ${OpenCV_LIBS} Boost::asio nlohmann_json::nlohmann_json Threads::Threads glfw)

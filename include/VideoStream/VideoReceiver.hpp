@@ -15,6 +15,7 @@ public:
 
     std::size_t pkgSize{1400};
 
+    std::condition_variable frameCV;
     std::mutex frameMutex;
     cv::Mat frame;
 

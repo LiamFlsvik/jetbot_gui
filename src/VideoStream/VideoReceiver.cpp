@@ -72,9 +72,10 @@ void VideoReceiver::run() {
                     try {
                         //cv::Mat frame(rows, cols, CV_8UC3, frameVector.data());
                         {
-                            std::lock_guard<std::mutex> lock(frameMutex);
+                            //std::unique_lock<std::mutex> lock(frameMutex);
                             frame = cv::imdecode(frameVector, cv::IMREAD_COLOR);
                             setFrame(frameVector);
+                            //frameCV.notify_all();
                         }
 
                         time = std::chrono::steady_clock::now();
@@ -101,10 +102,11 @@ void VideoReceiver::run() {
 }
 
 void VideoReceiver::setFrame(std::vector<unsigned char> frame){
-    std::cout << "FRAMEset";
+    //std::cout << "FRAMEset";
     frame_ = frame;
 }
 std::vector<unsigned char> VideoReceiver::getFrame(){
-    std::unique_lock<std::mutex> lock(frameMutex);
+    //std::unique_lock<std::mutex> lock(frameMutex);
+    //frameCV.wait(lock);
     return frame_;
 }

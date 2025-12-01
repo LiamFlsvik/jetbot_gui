@@ -2,6 +2,8 @@
 #define BACKEND_HPP
 #include <QObject>
 #include "JetBotMessages.hpp"
+#include <mutex>
+
 class Backend : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString ip READ getIP WRITE setIP NOTIFY ipChanged)

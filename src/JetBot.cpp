@@ -21,6 +21,7 @@ JetBot::~JetBot(){
         video_receiver_fpv_.run();
         while(true){
             send_image(video_receiver_fpv_.getFrame());
+            //std::this_thread::sleep_for(std::chrono::milliseconds(33));
         }
 
     }

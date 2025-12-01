@@ -17,6 +17,6 @@ VideoProvider::VideoProvider(): QQuickImageProvider(QQuickImageProvider::Image){
         std::cout << "[VideoProvider] updateFrame:frame was null" << std::endl;
         } else {
             m_frame_ = frame;
-            std::cout << "[VideoProvider] updateFrame:frame updated!\n";
+            //std::cout << "[VideoProvider] updateFrame:frame updated!\n";
         }
     }

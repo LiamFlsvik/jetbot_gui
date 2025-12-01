@@ -1,5 +1,4 @@
 import QtQuick 6.9
-import QtGraphs
 Rectangle{
     color: "transparent"
     width: parent.width
