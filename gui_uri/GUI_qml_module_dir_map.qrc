@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="/">
-    <file alias="/gui_uri">/home/zvik/5_semester/datateknikk/project/user_interface_fix/gui_uri</file>
-
-  </qresource>
-</RCC>
