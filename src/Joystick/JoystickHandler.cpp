@@ -52,7 +52,7 @@ void JoystickHandler::get_joystick_values(){
 
 void JoystickHandler::calculate_motion_command(){
     if(!chinese_controller_){
-        motion_commands_.angular_z = joystick_commands_.left_stick_x*scale_angular_;
+        motion_commands_.angular_z = -joystick_commands_.left_stick_x*scale_angular_;
         motion_commands_.linear_x  = (joystick_commands_.right_trigger-std::abs(joystick_commands_.left_trigger))*scale_linear_;
     } else {
         motion_commands_.angular_z = joystick_commands_.left_stick_x*scale_angular_*5;
