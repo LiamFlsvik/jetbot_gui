@@ -14,7 +14,7 @@ class Backend : public QObject {
     Q_PROPERTY(float currentSpeed READ getCurrentSpeed NOTIFY currentSpeedChanged)
     
     //For control
-    Q_PROPERTY(float arm WRITE setArmMode NOTIFY armChanged)
+    Q_PROPERTY(float arm READ getArmMode WRITE setArmMode NOTIFY armChanged)
     Q_PROPERTY(float desiredSpeed READ getDesiredSpeed WRITE setDesiredSpeed NOTIFY speedChanged)
     Q_PROPERTY(bool manualMode READ getMode WRITE setMode NOTIFY modeChanged)
     Q_PROPERTY(QString detectionMode READ getDetectionMode WRITE setDetectionMode NOTIFY detectionModeChanged)
@@ -28,7 +28,7 @@ public:
     int getBatteryPercentage() const;
     QString getDetectionMode() const;
     float getCurrentSpeed();
-    
+    bool getArmMode() const;
     GUI::ControlData getControlData();
     
 public slots:

@@ -78,6 +78,9 @@ void Backend::setDesiredSpeed(const float speed){
 float Backend::getDesiredSpeed() const {
     return desired_speed_;
 }
+bool Backend::getArmMode() const {
+    return arm_;
+}
 
 QString Backend::getIP() const {
     std::unique_lock<std::mutex> lock(display_data_mutex_);
