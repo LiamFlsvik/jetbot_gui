@@ -91,6 +91,7 @@ QML_FILES
     qml/DisplayMap.qml
     qml/DoubleSpinBox.qml
     qml/SpeedIndicator.qml
+    qml/DesiredSpeedDial.qml
 )
 
 target_include_directories(GUI 

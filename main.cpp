@@ -27,7 +27,8 @@ int main(int argc, char *argv[])
 
     QObject::connect(&jetbot_thread, &QThread::started, &jetbot,&JetBot::run);
     QObject::connect(&jetbot,&JetBot::gui_display_data_changed,&backend,&Backend::setDisplayData);
-    
+    //QObject::connect(&backend,&Backend::controlDataChanged,&jetbot,&JetBot::gui_control_data_set);
+
     QObject::connect(&jetbot,&JetBot::frame_changed_fpv,&video_provider,&VideoProvider::updateFrame);
     engine.addImageProvider("videoprovider", &video_provider);
 

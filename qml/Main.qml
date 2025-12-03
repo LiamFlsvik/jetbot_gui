@@ -59,5 +59,11 @@ ApplicationWindow {
             width: parent.width*0.2
             height: parent.width*0.2
         }
+        DesiredSpeedDial{
+            id:speed_dial;
+            anchors.bottom:bottomBar.top
+            anchors.left: background.left
+
+        }
     }
 }

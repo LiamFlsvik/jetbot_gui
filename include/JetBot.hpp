@@ -1,8 +1,12 @@
-#pragma once
+
+#ifndef JETBOT_HPP
+#define JETBOT_HPP
 #include "Server/Server.hpp"
 #include "Structs/JetbotData.hpp"
 #include "Joystick/JoystickHandler.hpp"
 #include "VideoStream/VideoReceiver.hpp"
+
+#include <QString>
 #include <QObject>
 #include <QImage>
 #include <mutex>
@@ -17,14 +21,13 @@ class JetBot : public QObject{
 
         void run();
 
-        void update_gui_display(); //TODO: Take in data
-
-
+        void update_gui_display(data::JetbotData jetbot_data); 
         QImage convert_to_qimage(const cv::Mat &mat);
+        
     public slots:   
         void send_image_fpv(cv::Mat frame);
         void send_image_lidar(cv::Mat frame);
-        
+        void gui_control_data_set(GUI::ControlData control_data);
     signals:
         void frame_changed_fpv(const QImage frame_);
         void frame_changed_lidar(const QImage frame_);
@@ -39,16 +42,18 @@ class JetBot : public QObject{
         std::thread jetbot_loop_thread_;
         Server server_;
         data::JetbotData jetbot_data_;
+        
+        GUI::ControlData gui_control_data_;
+        std::atomic<bool> update_gui_control_data_;
 
         GUI::DisplayData gui_display_data_;
-        GUI::ControlData gui_control_data_;
         std::mutex gui_update_mutex;
+
         JoystickHandler joystick_handler_;
         VideoReceiver video_receiver_fpv_;
         VideoReceiver video_receiver_lidar_;
         std::atomic<bool> simulator_mode_;
         std::atomic<bool> is_running_{};
         data::Motion motion_command_{};
-        
-
 };
+#endif

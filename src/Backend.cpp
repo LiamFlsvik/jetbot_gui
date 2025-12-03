@@ -31,7 +31,6 @@ void Backend::setMode(bool mode) {
 
 void Backend::setDetectionMode(const QString detectionMode){
     bool modified = false;
-    std::cout << "HEREEEEEEEEEEEEE\n";
     {
         std::unique_lock<std::mutex> lock(control_data_mutex_);
         if(control_data_.detection_mode == detectionMode){return;}

@@ -1,5 +1,4 @@
 #include "JetBot.hpp"
-#include "VideoStream/VideoReceiver.hpp"
 
 
 JetBot::JetBot(unsigned long server_port, unsigned long fpv_port, unsigned long lidar_port, bool chinese_controller, QObject *parent = nullptr) 
@@ -32,7 +31,10 @@ JetBot::~JetBot(){
 
         jetbot_loop_thread_ = std::thread([this] {
             while(is_running_){
-                server_.setMotionCommand(joystick_handler_.get_motion_command());
+                if(joystick_handler_.try_get_motion_command(motion_command_)){
+                    server_.setMotionCommand(motion_command_);
+                }
+                //TODO: add conditional variable.
             }
         });
 
@@ -41,22 +43,37 @@ JetBot::~JetBot(){
             while(is_running_){
                 {
                     std::unique_lock<std::mutex> lock(gui_update_mutex);
+                    if(update_gui_control_data_){
+                        update_gui_control_data_= false;
+                    }
                     if (server_.tryGetJetbotData(jetbot_data_)){
-                        //update_gui_display(); for testing
-                    } 
-                    
-                    update_gui_display(); //for testing
+                        update_gui_display(jetbot_data_); 
+                    }
                 }
                 std::this_thread::sleep_for(std::chrono::milliseconds(20));
             }
         });
     }
 
-    void JetBot::update_gui_display(){
+    void JetBot::gui_control_data_set(GUI::ControlData control_data){
+        std::unique_lock<std::mutex> lock(gui_update_mutex);
+
+        if (!update_gui_control_data_){
+            gui_control_data_ = control_data;
+            motion_command_.desired_speed = control_data.desired_speed;
+            motion_command_.armed_or_disarmed = control_data.armed_or_disarmed;
+            motion_command_.detection_mode = control_data.detection_mode.toStdString();
+        } else{
+            update_gui_control_data_ = true; //flag to allow the thread update_gui_thread_ to update the control data
+        }
+        
+    }
+
+    void JetBot::update_gui_display(data::JetbotData jetbot_data){
         //Currently only "dummy data" to test the GUI
         gui_display_data_.ip = QString::fromStdString("JetbotIP");
         if(gui_display_data_.current_speed > 2){gui_display_data_.current_speed = 0;}
-        gui_display_data_.current_speed += 0.01;
+        gui_display_data_.current_speed += 0.05;
         gui_display_data_.battery_percentage = 100;
         gui_display_data_changed(gui_display_data_);
     }

@@ -4,18 +4,20 @@
 #include <thread>
 #include <chrono>
 #include <condition_variable>
+#include <atomic>
 class JoystickHandler{
     public:
         JoystickHandler(bool chinese_controller);
         
         ~JoystickHandler();
         void run();
-        data::Motion get_motion_command();
+        bool try_get_motion_command(data::Motion &motion_command);
     private:
         void get_joystick_values();
         void calculate_motion_command();
         inline float add_deadband(float axis, float deadband);
         void debug();
+        bool joystick_changed();
 
         Joystick joystick_;
         bool chinese_controller_;
@@ -27,6 +29,7 @@ class JoystickHandler{
         std::thread joystick_handler_thread;
         std::atomic<bool> running_;
         std::condition_variable get_joystick_cv;
+        float last_joystick_sum_{};
 
 
 };

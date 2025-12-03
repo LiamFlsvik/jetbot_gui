@@ -179,7 +179,6 @@ void Server::connectionHandler(asio::ip::tcp::socket socket) {
     if (writeThread.joinable())     writeThread.join();
     if (readHandler.joinable())     readHandler.join();
     if (senderThread.joinable())    senderThread.join();
-
 }
 
 void Server::setMotionCommand(data::Motion motion){

@@ -66,7 +66,6 @@ void JoystickHandler::debug(){
     for(int i= 0; i<10; i++){
         std::cout << "C_" << i << " = " << joystick_.getAxis(i) << "  ";
     }
-
     std::cout << std::endl;
 }
 
@@ -84,10 +83,25 @@ inline float JoystickHandler::add_deadband(float axis, float deadband){
     return 0.0;
 }
 
-data::Motion JoystickHandler::get_motion_command(){
+bool JoystickHandler::joystick_changed(){
+    float joystick_sum = 0;
+    joystick_sum = motion_commands_.angular_z+motion_commands_.linear_x;
+    if(joystick_sum != last_joystick_sum_){
+        last_joystick_sum_ = joystick_sum;
+        return true;
+    } else {
+        return false;
+    }
+}
 
+bool JoystickHandler::try_get_motion_command(data::Motion &motion_command){
     std::lock_guard<std::mutex> lock(motion_command_mutex_);
-    return motion_commands_;
+    if(joystick_changed()){
+        motion_command = motion_commands_;
+        return true;
+    } else{
+        return false;
+    }
 }
 
 
