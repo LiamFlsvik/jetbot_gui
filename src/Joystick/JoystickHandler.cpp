@@ -96,7 +96,8 @@ bool JoystickHandler::joystick_changed(){
 bool JoystickHandler::try_get_motion_command(data::Motion &motion_command){
     std::lock_guard<std::mutex> lock(motion_command_mutex_);
     if(joystick_changed()){
-        motion_command = motion_commands_;
+        motion_command.linear_x = motion_commands_.linear_x;
+        motion_command.angular_z = motion_commands_.angular_z;
         return true;
     } else{
         return false;

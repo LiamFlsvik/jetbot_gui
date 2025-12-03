@@ -29,6 +29,18 @@ void Backend::setMode(bool mode) {
         emit controlDataChanged(control_data_);
     }
 }
+void Backend::setArmMode(bool arm_mode) {
+    bool modified = false;
+    {
+        std::unique_lock<std::mutex> lock(control_data_mutex_);
+        if (control_data_.armed_or_disarmed == arm_mode){return;}
+        control_data_.armed_or_disarmed = arm_mode;
+        modified = true;
+    }
+    if(modified){
+        emit controlDataChanged(control_data_);
+    }
+}
 
 void Backend::setDetectionMode(const QString detectionMode){
     bool modified = false;

@@ -14,6 +14,7 @@ class Backend : public QObject {
     Q_PROPERTY(float currentSpeed READ getCurrentSpeed NOTIFY currentSpeedChanged)
     
     //For control
+    Q_PROPERTY(float arm WRITE setArmMode NOTIFY armChanged)
     Q_PROPERTY(float desiredSpeed READ getDesiredSpeed WRITE setDesiredSpeed NOTIFY speedChanged)
     Q_PROPERTY(bool manualMode READ getMode WRITE setMode NOTIFY modeChanged)
     Q_PROPERTY(QString detectionMode READ getDetectionMode WRITE setDetectionMode NOTIFY detectionModeChanged)
@@ -35,12 +36,13 @@ public slots:
     void setMode(const bool mode);
     void setDetectionMode(const QString detectionMode);
     void setDesiredSpeed(const float speed);
-    
+    void setArmMode(const bool);
     //Received from JetBot
     void setIP(const QString ipAddress);
     void setDisplayData(const GUI::DisplayData display_data);
 
 signals:
+    void armChanged(bool arm_mode);
     void currentSpeedChanged(float current_speed_);
     void ipChanged(QString newIP);
     void speedChanged(float newSpeed);
@@ -50,6 +52,7 @@ signals:
 private: 
     QString ip_address_ = "JetBot User Interface"; // IP address set purely for displaying the ip on the GUI (Display only)
     float desired_speed_; 
+    bool arm_;
     float current_speed_; // Jetbot Speed (for display only)
     bool mode_; // Jetbot mode set by user; Autonomous or manual.
     int battery_percentage_; // Percentage of current battery.

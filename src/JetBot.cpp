@@ -37,6 +37,7 @@ JetBot::~JetBot(){
                 if(joystick_handler_.try_get_motion_command(motion_command_)){
                     server_.setMotionCommand(motion_command_);
                 }
+                
                 if(update_gui_control_data_){
                     server_.setMotionCommand(motion_command_);
                     update_gui_control_data_=false;

@@ -28,13 +28,18 @@ Rectangle{
                     backend.setMode(switch0.checked)
                 }
             }
-            Rectangle{
-                width:bottomBar.width*0.05
-                height:bottomBar.height*0.7
-                Switch {
-                    text: qsTr("ARM")
-                    anchors.fill:parent
-                    
+
+            CustomSwitch{
+                id: switch1
+                text: "Arm/Disarm"
+                Layout.alignment: Qt.AlignLeft
+                Layout.fillWidth: true
+                width:parent.width
+                height:parent.height
+
+                onCheckedChanged: {
+                    console.log(text +" "+ switch1.checked)
+                    backend.setArmMode(switch1.checked)
                 }
             }
 
