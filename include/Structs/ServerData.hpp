@@ -11,7 +11,6 @@ namespace data {
         float angular_z{0.0};  //From joystick
         float desired_speed{}; //From GUI in autonomy mode
         std::string detection_mode{}; // From GUI
-        
     };
 
     struct ServerData {
@@ -25,7 +24,7 @@ namespace data {
                             {"linear_x",    motion.linear_x },
                             {"angular_z",   motion.angular_z},
                             {"desired_speed", motion.desired_speed},
-                                {"detection_mode", motion.detection_mode}
+                            {"detection_mode", motion.detection_mode}
                             };
     }
 

@@ -53,6 +53,8 @@ Rectangle {
             }
         }
 
+       
+
         Rectangle{
             id: ipAddress
             width:bottomBar.width*0.05
@@ -108,11 +110,6 @@ Rectangle {
                     }
                 }
             }
-        }
-        Switch {
-            text: qsTr("ARM")
-            //checked: Networking.wifiEnabled
-            //onClicked: Networking.wifiEnabled = checked
         }
     }
     Popup {

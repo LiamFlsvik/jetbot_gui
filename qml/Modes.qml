@@ -28,6 +28,15 @@ Rectangle{
                     backend.setMode(switch0.checked)
                 }
             }
+            Rectangle{
+                width:bottomBar.width*0.05
+                height:bottomBar.height*0.7
+                Switch {
+                    text: qsTr("ARM")
+                    anchors.fill:parent
+                    
+                }
+            }
 
             ComboBox {
                 id: combo_box_vision_mode
