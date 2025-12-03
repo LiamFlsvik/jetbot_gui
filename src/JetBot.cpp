@@ -10,8 +10,10 @@ JetBot::JetBot(unsigned long server_port, unsigned long fpv_port, unsigned long 
 }
 
 JetBot::~JetBot(){
+    is_running_ = false;
+
     if (jetbot_loop_thread_.joinable()){
-        update_gui_thread_.join();
+        jetbot_loop_thread_.join();
     }
     if (server_thread_.joinable()){
         server_thread_.join();
@@ -20,7 +22,6 @@ JetBot::~JetBot(){
         update_gui_thread_.join();
     }
     
-    is_running_ = false;
 }
 
     void JetBot::run(){
@@ -43,12 +44,12 @@ JetBot::~JetBot(){
             while(is_running_){
                 {
                     std::unique_lock<std::mutex> lock(gui_update_mutex);
-                    if(update_gui_control_data_){
-                        update_gui_control_data_= false;
+                    if(!update_gui_control_data_){
+                        update_gui_control_data_= true;
                     }
                     if (server_.tryGetJetbotData(jetbot_data_)){
+                        update_gui_display(jetbot_data_); 
                     }
-                    update_gui_display(jetbot_data_); 
                 }
                 std::this_thread::sleep_for(std::chrono::milliseconds(20));
             }
@@ -58,13 +59,13 @@ JetBot::~JetBot(){
     void JetBot::gui_control_data_set(GUI::ControlData control_data){
         std::unique_lock<std::mutex> lock(gui_update_mutex);
 
-        if (!update_gui_control_data_){
+        if (update_gui_control_data_){
             gui_control_data_ = control_data;
             motion_command_.desired_speed = control_data.desired_speed;
             motion_command_.armed_or_disarmed = control_data.armed_or_disarmed;
             motion_command_.detection_mode = control_data.detection_mode.toStdString();
         } 
-        update_gui_control_data_ = true; //flag to allow the thread update_gui_thread_ to update the control data
+        update_gui_control_data_ = false; //flag to allow the thread update_gui_thread_ to update the control data
     }
 
     void JetBot::update_gui_display(data::JetbotData jetbot_data){
@@ -73,8 +74,7 @@ JetBot::~JetBot(){
         if(gui_display_data_.current_speed > 2){gui_display_data_.current_speed = 0;}
         gui_display_data_.current_speed += 0.01;
         gui_display_data_.battery_percentage = 100;
-        std::cout << "HEREEEE\n\r";
-        gui_display_data_changed(gui_display_data_);
+        emit gui_display_data_changed(gui_display_data_);
     }
     
     QImage JetBot::convert_to_qimage(const cv::Mat &mat){

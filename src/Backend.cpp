@@ -1,5 +1,7 @@
 #include "Backend.hpp"
 #include <QDebug>
+#include <qdebug.h>
+#include <Structs/GUIData.hpp>
 
 Backend::Backend(QObject* parent) : QObject(parent) {}
 Backend::~Backend(){}
@@ -7,13 +9,12 @@ Backend::~Backend(){}
 
 GUI::ControlData Backend::getControlData(){
     std::unique_lock<std::mutex> lock(control_data_mutex_);
-    //TODO: Remove printstatements
+    //TODO: Remove print statements
     qDebug() << "Manual mode set to:" << control_data_.manual_mode;
     qDebug() << "Detection mode set to:" << control_data_.detection_mode;
     qDebug() << "Desired speed set to:" << control_data_.desired_speed;
 
     return control_data_;
-    
 };
 
 void Backend::setMode(bool mode) {
@@ -99,10 +100,10 @@ void Backend::setDisplayData(const GUI::DisplayData display_data){
         }
         if(current_speed_ != display_data.current_speed){
             current_speed_= display_data.current_speed;
+            qDebug() << "current speed:" << current_speed_;
             current_speed_changed = true;
         }
     }
-
     if(ip_changed){
         emit ipChanged(ip_address_);
     }

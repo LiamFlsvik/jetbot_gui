@@ -7,7 +7,7 @@
 #include <QThread>
 #include <string>
 #include "include/JetBot.hpp"
-
+#include <Structs/GUIData.hpp>
 #include "VideoProvider.hpp"
 
 int main(int argc, char *argv[])
@@ -36,7 +36,6 @@ int main(int argc, char *argv[])
     
     engine.load(QUrl(QStringLiteral("qrc:/gui_uri/qml/Main.qml")));
     QQmlContext *rootContext = engine.rootContext();
-
 
 
     return app.exec();

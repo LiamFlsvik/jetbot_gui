@@ -6,10 +6,11 @@
 namespace data {
     struct Motion {
         bool armed_or_disarmed{true}; // From GUI
+        bool manual_mode{true};
         float linear_x{0.0}; //From joystick
         float angular_z{0.0};  //From joystick
         float desired_speed{}; //From GUI in autonomy mode
-        std::string detection_mode; // From GUI
+        std::string detection_mode{}; // From GUI
         
     };
 
@@ -19,7 +20,8 @@ namespace data {
 
     // Conversion from structs to json using nlohmann
     inline void to_json(nlohmann::json &j, const Motion &motion) {
-        j = nlohmann::json{ {"armed_or_disarmed",     motion.armed_or_disarmed  },
+        j = nlohmann::json{ {"armed_or_disarmed",motion.armed_or_disarmed},
+                            {"manual_mode",motion.manual_mode},
                             {"linear_x",    motion.linear_x },
                             {"angular_z",   motion.angular_z},
                             {"desired_speed", motion.desired_speed},
@@ -34,6 +36,7 @@ namespace data {
     // Conversion from json to structs using nlohmann
     inline void from_json(const nlohmann::json &j, Motion &motion) {
         j.at("armed_or_disarmed").get_to(motion.armed_or_disarmed);
+        j.at("manual_mode").get_to(motion.manual_mode);
         j.at("linear_x").get_to(motion.linear_x);
         j.at("angular_z").get_to(motion.angular_z);
         j.at("desired_speed").get_to(motion.desired_speed);
