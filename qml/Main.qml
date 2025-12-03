@@ -28,6 +28,7 @@ ApplicationWindow {
         } 
 
         DisplayCamera {
+            id:displayCamera_
             anchors.horizontalCenter: background.horizontalCenter
             anchors.top:topBar.bottom
             anchors.bottom: bottomBar.top
@@ -38,8 +39,8 @@ ApplicationWindow {
         }
 
         DisplayMap {
-            anchors.top:topBar.bottom
-            anchors.right:parent.right
+            anchors.top:displayCamera_.top
+            anchors.right:displayCamera_.right
             height:parent.height*0.2
             width:parent.height*0.2
         }

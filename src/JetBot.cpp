@@ -64,6 +64,7 @@ JetBot::~JetBot(){
         std::cout << "on gui control data set\n\r";
         if (!update_gui_control_data_){
             gui_control_data_ = control_data;
+            motion_command_.armed_or_disarmed = true;
             motion_command_.manual_mode = control_data.manual_mode;
             motion_command_.desired_speed = control_data.desired_speed;
             motion_command_.armed_or_disarmed = control_data.armed_or_disarmed;

@@ -109,6 +109,11 @@ Rectangle {
                 }
             }
         }
+        Switch {
+            text: qsTr("ARM")
+            //checked: Networking.wifiEnabled
+            //onClicked: Networking.wifiEnabled = checked
+        }
     }
     Popup {
         id: pid_settings

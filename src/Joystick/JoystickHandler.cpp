@@ -40,8 +40,8 @@ void JoystickHandler::get_joystick_values(){
         joystick_commands_.left_stick_x =  add_deadband(joystick_.getAxis(0), 0.09);
         joystick_commands_.left_stick_y =  add_deadband(joystick_.getAxis(1), 0.09);
         joystick_commands_.right_stick_x=  add_deadband(joystick_.getAxis(2), 0.09);
-        joystick_commands_.left_trigger=   add_deadband(joystick_.getAxis(3), 0.09);
-        joystick_commands_.right_trigger=  add_deadband(joystick_.getAxis(4), 0.09);
+        joystick_commands_.left_trigger=   (add_deadband(joystick_.getAxis(3), 0.09)+1)/2; //starts at -1
+        joystick_commands_.right_trigger=  (add_deadband(joystick_.getAxis(4), 0.09)+1)/2; //starts at -1
     } else {
         joystick_commands_.left_stick_x =  -add_deadband(joystick_.getAxis(0),0.2); //Inverted
         joystick_commands_.left_stick_y =  -add_deadband(joystick_.getAxis(1),0.2); //Inverted
