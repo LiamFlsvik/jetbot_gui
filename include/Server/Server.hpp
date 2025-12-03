@@ -13,7 +13,8 @@ public:
     void listener(const unsigned long &port);
     void setMotionCommand(data::Motion motion);
     bool tryGetJetbotData(data::JetbotData &data);
-    
+
+private:
     std::atomic<bool> shouldStop{false};
 
     data::JetbotData jetbotData;
@@ -27,7 +28,6 @@ public:
 
     std::atomic<bool> newJetbotData;
     std::atomic<bool> newServerData;
-private:
 
 };
 

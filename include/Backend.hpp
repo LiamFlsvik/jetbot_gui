@@ -1,5 +1,6 @@
 #ifndef BACKEND_HPP
 #define BACKEND_HPP
+#include <qtmetamacros.h>
 #pragma once
 #include <QObject>
 #include <chrono>
@@ -14,6 +15,7 @@ class Backend : public QObject {
     Q_PROPERTY(float currentSpeed READ getCurrentSpeed NOTIFY currentSpeedChanged)
     
     //For control
+    //Q_PROPERTY(float simulatorMode READ getSimulatorMode WRITE setSimulatorMode NOTIFY simulatorModeChanged)
     Q_PROPERTY(float arm READ getArmMode WRITE setArmMode NOTIFY armChanged)
     Q_PROPERTY(float desiredSpeed READ getDesiredSpeed WRITE setDesiredSpeed NOTIFY speedChanged)
     Q_PROPERTY(bool manualMode READ getMode WRITE setMode NOTIFY modeChanged)
@@ -30,18 +32,20 @@ public:
     float getCurrentSpeed();
     bool getArmMode() const;
     GUI::ControlData getControlData();
-    
+    //bool getSimulatorMode() const;
 public slots:
     //To be sent to JetBot
     void setMode(const bool mode);
     void setDetectionMode(const QString detectionMode);
     void setDesiredSpeed(const float speed);
-    void setArmMode(const bool);
+    void setArmMode(const bool arm_mode);
     //Received from JetBot
     void setIP(const QString ipAddress);
     void setDisplayData(const GUI::DisplayData display_data);
+    //void setSimulatorMode(const bool simulator_mode);
 
 signals:
+    //void simulatorModeChanged(bool simulator_mode);
     void armChanged(bool arm_mode);
     void currentSpeedChanged(float current_speed_);
     void ipChanged(QString newIP);

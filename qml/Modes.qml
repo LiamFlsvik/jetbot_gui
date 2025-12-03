@@ -61,6 +61,19 @@ Rectangle{
                     backend.setDetectionMode(combo_box_vision_mode.currentValue)
                 }
             }
+            CustomSwitch{
+                id: switch2
+                text: "SimulatorMode"
+                Layout.alignment: Qt.AlignLeft
+                Layout.fillWidth: true
+                width:parent.width
+                height:parent.height
+
+                onCheckedChanged: {
+                    console.log(text +" "+ switch2.checked)
+                    backend.setSimulatorMode(switch2.checked)
+                }
+            }
         }
         
     }

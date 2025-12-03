@@ -13,16 +13,16 @@ JetBot::JetBot(unsigned long server_port, unsigned long fpv_port, unsigned long 
 JetBot::~JetBot(){
     is_running_ = false;
 
-    if (jetbot_loop_thread_.joinable()){
-        jetbot_loop_thread_.join();
+    if (update_gui_thread_.joinable()){
+        update_gui_thread_.join();
     }
     if (server_thread_.joinable()){
         server_thread_.join();
     }
-    if (update_gui_thread_.joinable()){
-        update_gui_thread_.join();
+
+    if (jetbot_loop_thread_.joinable()){
+        jetbot_loop_thread_.join();
     }
-    
 }
 
     void JetBot::run(){

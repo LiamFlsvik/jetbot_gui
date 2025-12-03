@@ -16,7 +16,7 @@ Rectangle{
         //Image {
         //    id: lidarImage
         //    anchors.fill: parent
-        //    source: "image://videoprovider/frame"
+        //    source: "image://videoprovider_lidar/frame"
         //    cache: false
         //    fillMode: Image.PreserveAspectCrop
         //    
@@ -25,7 +25,7 @@ Rectangle{
         //        running: true
         //        repeat: true
         //        onTriggered: {
-        //            videoImage.source = "image://videoprovider/frame?t=" + Date.now();
+        //            videoImage.source = "image://videoprovider_lidar/frame?t=" + Date.now();
         //        }
         //    }
         //}

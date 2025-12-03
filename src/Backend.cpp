@@ -41,6 +41,19 @@ void Backend::setArmMode(bool arm_mode) {
         emit controlDataChanged(control_data_);
     }
 }
+/*
+void Backend::setSimulatorMode(bool simulator_mode){
+    bool modified = false;
+    {
+        std::unique_lock<std::mutex> lock(control_data_mutex_);
+        //control_data_.simulator_mode = simulator_mode;
+        modified = true;
+    }
+    if(modified){
+        //emit controlDataChanged(control_data_);
+    }
+}
+*/
 
 void Backend::setDetectionMode(const QString detectionMode){
     bool modified = false;
@@ -90,6 +103,11 @@ QString Backend::getIP() const {
 bool Backend::getMode() const{
     return mode_;
 }
+/*
+bool Backend::getSimulatorMode() const{
+    return 
+}
+*/
 
 int Backend::getBatteryPercentage() const{
     return battery_percentage_;

@@ -19,6 +19,7 @@ namespace GUI{
         float yaw_gain, yaw_kp, yaw_ki, yaw_kd;
         float lin_gain, lin_kp, lin_ki, lin_kd;
         QString detection_mode;
+        bool simulator_mode;
     };
 }
 // to use the type with qt
