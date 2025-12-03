@@ -35,9 +35,9 @@ Rectangle{
                 textRole: "vision_mode"
                 model: ListModel {
                     id: model
-                    ListElement { vision_mode: "Object detection" }
-                    ListElement { vision_mode: "Face detection" }
-                    ListElement { vision_mode: "Canny edge detection" }
+                    ListElement { vision_mode: "Linefollowing" }
+                    ListElement { vision_mode: "none" }
+                    ListElement { vision_mode: "none" }
                 }
                 onAccepted: {
                     if (find(editText) === -1)
