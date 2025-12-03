@@ -1,7 +1,8 @@
 #include "VideoStream/VideoReceiver.hpp"
 
-VideoReceiver::VideoReceiver() : ep(asio::ip::udp::v4(), 44444), s(ioContext, ep), frameVector(1920*1080*3) {
+VideoReceiver::VideoReceiver(unsigned long port, QObject *parent) : QObject(parent), ep(asio::ip::udp::v4(), port), s(ioContext, ep), frameVector(1920*1080*3) {
     if (s.is_open()) std::cout << "socket åpnet" << std::endl;
+    qRegisterMetaType<cv::Mat>("cv::Mat"); //https://stackoverflow.com/questions/9646110/how-to-send-a-qt-signal-containing-a-cvmat
     //for (auto &byte : frameVector) byte = 0x00;
 }
 
@@ -74,7 +75,7 @@ void VideoReceiver::run() {
                         {
                             //std::unique_lock<std::mutex> lock(frameMutex);
                             frame = cv::imdecode(frameVector, cv::IMREAD_COLOR);
-                            setFrame(frame);
+                            emit frame_changed(frame);
                             
                             //frameCV.notify_all();
                         }
@@ -102,12 +103,3 @@ void VideoReceiver::run() {
     
 }
 
-void VideoReceiver::setFrame(cv::Mat frame){
-    //std::cout << "FRAMEset";
-    frame_ = frame;
-}
-cv::Mat VideoReceiver::getFrame(){
-    //std::unique_lock<std::mutex> lock(frameMutex);
-    //frameCV.wait(lock);
-    return frame_;
-}

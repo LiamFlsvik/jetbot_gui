@@ -12,14 +12,12 @@ namespace data {
 
     struct EncoderData {
         long left = 0, right = 0;
-
     };
 
     struct SensorData {
         ImuData imu;
         EncoderData encoders;
     };
-
 
     struct JetbotData {
         SensorData sensorData;

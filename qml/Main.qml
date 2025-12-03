@@ -21,11 +21,10 @@ ApplicationWindow {
             id:topBar
             anchors.top: parent.top
         }
-        
 
         BottomBar { 
-        id: bottomBar
-        anchors.bottom: parent.bottom
+            id: bottomBar
+            anchors.bottom: parent.bottom
         } 
 
         DisplayCamera {
@@ -42,7 +41,7 @@ ApplicationWindow {
             anchors.top:topBar.bottom
             anchors.right:parent.right
             height:parent.height*0.2
-            width:parent.width*0.3
+            width:parent.height*0.2
         }
 
         Modes{
@@ -53,9 +52,12 @@ ApplicationWindow {
             anchors.leftMargin:parent.width*0.01 ;
             width:parent.width*0.1; height:parent.height*0.35;
         }
-
-
-
-         
+        SpeedIndicator{
+            id:speedIndicator_
+            anchors.bottom:bottomBar.top
+            anchors.right: background.right
+            width: parent.width*0.2
+            height: parent.width*0.2
+        }
     }
 }

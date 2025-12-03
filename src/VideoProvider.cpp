@@ -2,7 +2,7 @@
 #include <iostream>
 VideoProvider::VideoProvider(): QQuickImageProvider(QQuickImageProvider::Image){
     m_frame_ = QImage(1920,1080,QImage::Format_RGB32);
-    m_frame_.fill(QColor("black"));
+    m_frame_.fill(QColor("white"));
 }
 
     QImage VideoProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize){

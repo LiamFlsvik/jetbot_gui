@@ -21,8 +21,6 @@ Rectangle{
             cache: false
             fillMode: Image.PreserveAspectCrop
             
-            
-            // Timer to update the image, should instead be triggered by signal..
             Timer {
                 interval: 10
                 running: true

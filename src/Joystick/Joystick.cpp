@@ -28,6 +28,9 @@ Joystick::Joystick(int joystickId)
       name_("No Joystick") 
 {
     joystick_id_ = findController();
+    if (joystick_id_ == -1){
+        return;
+    }
     update();
 }
 
@@ -37,18 +40,18 @@ bool Joystick::isConnected() const {
 
 int Joystick::findController() {
     int joy_id;
-    for (int id = 0; id < 25; ++id) {
+    for (int id = 0; id < 15; ++id) {
         if (glfwJoystickPresent(id)) {
             std::string name = glfwGetJoystickName(id);
-            std::cout << "Found joystick : " << name << "ID:" << id; "\n";
+            std::cout << "Found potential joystick : " << name << "ID:" << id; "\n";
             if (name.find("Touchpad") != std::string::npos ||
                 name.find("ELAN") != std::string::npos ||
                 name.find("Razer") != std::string::npos)
             {
-                std::cout << "no controller found\n";
+                std::cout << "No controllers \n";
                 continue;
             }
-            std::cout << "controller found controller: " << glfwGetJoystickName(id) << "\n";
+            std::cout << "Controller found: " << glfwGetJoystickName(id) << "\n";
             return id; 
         }
     }

@@ -83,7 +83,7 @@ Rectangle {
                 source: "qrc:/qml/images/battery/battery100.png"
                 fillMode: Image.PreserveAspectFit
                 // https://wiki.qt.io/QML_States_Controlling
-                //
+                // UNFINISHED, battery voltage is NOT being read !
                 //states : [
                 //    State {
                 //        name: "100"

@@ -12,6 +12,8 @@ public:
 
     void listener(const unsigned long &port);
     void setMotionCommand(data::Motion motion);
+    bool tryGetJetbotData(data::JetbotData &data);
+    
     std::atomic<bool> shouldStop{false};
 
     data::JetbotData jetbotData;

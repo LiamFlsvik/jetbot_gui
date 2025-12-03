@@ -35,7 +35,6 @@ void Server::listener(const unsigned long &port) {
     }
 }
 
-
 void Server::connectionHandler(asio::ip::tcp::socket socket) {
     std::mutex receivedMsgMutex;
     std::condition_variable receivedMsgCV;
@@ -191,3 +190,15 @@ void Server::setMotionCommand(data::Motion motion){
         newServerData = true;
     }
 }
+
+bool Server::tryGetJetbotData(data::JetbotData &data){
+    std::unique_lock<std::mutex> lock(jetbotDataMutex);
+    if (newJetbotData){
+        data = jetbotData;
+        newJetbotData=false;
+        return true;
+    }
+    return false;
+}
+
+

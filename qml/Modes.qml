@@ -19,13 +19,14 @@ Rectangle{
                 id: switch0
                 text: "Manual Mode"
                 Layout.alignment: Qt.AlignLeft
-                onCheckedChanged: {
-                console.log(text +" "+ switch0.checked)
-                backend.setMode(switch0.checked)
-                }
                 Layout.fillWidth: true
                 width:parent.width
                 height:parent.height
+
+                onCheckedChanged: {
+                    console.log(text +" "+ switch0.checked)
+                    backend.setMode(switch0.checked)
+                }
             }
 
             ComboBox {
@@ -44,7 +45,6 @@ Rectangle{
                 }
                 onActivated: {
                     backend.setDetectionMode(combo_box_vision_mode.currentValue)
-                    
                 }
             }
         }

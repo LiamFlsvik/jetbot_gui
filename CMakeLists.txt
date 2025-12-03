@@ -14,12 +14,7 @@ find_package(Qt6 6.4 COMPONENTS Quick Qml Widgets REQUIRED)
 
 find_package(Threads REQUIRED)
 
-#find_package(OpenCV REQUIRED)
-#include_directories(${OpenCV_INCLUDE_DIRS})
-#find_package(Boost REQUIRED)
-
 find_package(OpenCV REQUIRED)
-
 
 include(FetchContent)
 FetchContent_Declare(
@@ -58,6 +53,7 @@ qt_add_executable(GUI
     include/Structs/JetbotData.hpp
     include/Structs/ServerData.hpp
     include/Joystick/JoystickCommands.hpp
+    include/Structs/GUIData.hpp
 )
 
 
@@ -77,6 +73,8 @@ qt_add_resources(GUI "app_images"
         qml/images/pid_menu_down.png
         qml/images/pid_menu_up.png
         qml/images/mode_menu.png
+        qml/images/speedometer_background.png
+        qml/images/speedometer_indicator.png
 )
 
 qt_add_qml_module(GUI
@@ -92,6 +90,7 @@ QML_FILES
     qml/CustomSwitch.qml
     qml/DisplayMap.qml
     qml/DoubleSpinBox.qml
+    qml/SpeedIndicator.qml
 )
 
 target_include_directories(GUI 

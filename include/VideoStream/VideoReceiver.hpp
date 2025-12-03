@@ -5,10 +5,12 @@
 #include <asio.hpp>
 #include <chrono>
 #include <iostream>
+#include <QObject>
 
-class VideoReceiver {
+class VideoReceiver : public QObject {
+    Q_OBJECT
 public:
-    VideoReceiver();
+    explicit VideoReceiver(unsigned long port = 44444, QObject *parent = nullptr);
     ~VideoReceiver();
 
     void run();
@@ -21,8 +23,10 @@ public:
 
     bool shouldClose{false};
     
-    cv::Mat getFrame();
-    void setFrame(cv::Mat frame);
+    
+
+signals:
+    void frame_changed(const cv::Mat frame);
 
 private:
     cv::Mat frame_;
