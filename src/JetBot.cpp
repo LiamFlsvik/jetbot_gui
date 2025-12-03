@@ -47,8 +47,8 @@ JetBot::~JetBot(){
                         update_gui_control_data_= false;
                     }
                     if (server_.tryGetJetbotData(jetbot_data_)){
-                        update_gui_display(jetbot_data_); 
                     }
+                    update_gui_display(jetbot_data_); 
                 }
                 std::this_thread::sleep_for(std::chrono::milliseconds(20));
             }
@@ -63,18 +63,17 @@ JetBot::~JetBot(){
             motion_command_.desired_speed = control_data.desired_speed;
             motion_command_.armed_or_disarmed = control_data.armed_or_disarmed;
             motion_command_.detection_mode = control_data.detection_mode.toStdString();
-        } else{
-            update_gui_control_data_ = true; //flag to allow the thread update_gui_thread_ to update the control data
-        }
-        
+        } 
+        update_gui_control_data_ = true; //flag to allow the thread update_gui_thread_ to update the control data
     }
 
     void JetBot::update_gui_display(data::JetbotData jetbot_data){
         //Currently only "dummy data" to test the GUI
         gui_display_data_.ip = QString::fromStdString("JetbotIP");
         if(gui_display_data_.current_speed > 2){gui_display_data_.current_speed = 0;}
-        gui_display_data_.current_speed += 0.05;
+        gui_display_data_.current_speed += 0.01;
         gui_display_data_.battery_percentage = 100;
+        std::cout << "HEREEEE\n\r";
         gui_display_data_changed(gui_display_data_);
     }
     
