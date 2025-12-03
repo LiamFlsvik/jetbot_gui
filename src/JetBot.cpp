@@ -1,4 +1,5 @@
 #include "JetBot.hpp"
+#include <cmath>
 
 
 JetBot::JetBot(unsigned long server_port, unsigned long fpv_port, unsigned long lidar_port, bool chinese_controller, QObject *parent = nullptr) 
@@ -63,6 +64,7 @@ JetBot::~JetBot(){
         std::cout << "on gui control data set\n\r";
         if (!update_gui_control_data_){
             gui_control_data_ = control_data;
+            motion_command_.manual_mode = control_data.manual_mode;
             motion_command_.desired_speed = control_data.desired_speed;
             motion_command_.armed_or_disarmed = control_data.armed_or_disarmed;
             motion_command_.detection_mode = control_data.detection_mode.toStdString();
@@ -73,8 +75,7 @@ JetBot::~JetBot(){
     void JetBot::update_gui_display(data::JetbotData jetbot_data){
         //Currently only "dummy data" to test the GUI
         gui_display_data_.ip = QString::fromStdString("JetbotIP");
-        if(gui_display_data_.current_speed > 2){gui_display_data_.current_speed = 0;}
-        gui_display_data_.current_speed += 0.01;
+        gui_display_data_.current_speed =std::sqrt(std::pow(jetbot_data.sensorData.imu.acc_x,2)+std::pow(jetbot_data.sensorData.imu.acc_y,2)+std::pow(jetbot_data.sensorData.imu.acc_z,2));
         gui_display_data_.battery_percentage = 100;
         emit gui_display_data_changed(gui_display_data_);
     }

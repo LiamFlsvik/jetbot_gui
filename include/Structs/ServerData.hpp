@@ -6,7 +6,7 @@
 namespace data {
     struct Motion {
         bool armed_or_disarmed{true}; // From GUI
-        bool manual_mode{true};
+        bool manual_mode{true}; //From GUI
         float linear_x{0.0}; //From joystick
         float angular_z{0.0};  //From joystick
         float desired_speed{}; //From GUI in autonomy mode
