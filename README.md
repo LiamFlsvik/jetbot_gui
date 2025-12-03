@@ -16,7 +16,7 @@ The goal of this project is to create a graphical user interface (GUI) that is u
 * Take Screenshots
 * 
 
-![Image of GUI](readme_images/jetbot_gui.pn)
+![Image of GUI](readme_images/jetbot_gui.png)
 
 ### Stack
 
