@@ -26,7 +26,7 @@ void Backend::setMode(bool mode) {
         modified = true;
     }
     if(modified){
-        emit controlDataChanged();
+        emit controlDataChanged(control_data_);
     }
 }
 
@@ -39,7 +39,7 @@ void Backend::setDetectionMode(const QString detectionMode){
         modified = true;
     }
     if(modified){
-        emit controlDataChanged();
+        emit controlDataChanged(control_data_);
     }
 }
 
@@ -59,7 +59,7 @@ void Backend::setDesiredSpeed(const float speed){
             modified=true;
     }
     if(modified){
-        emit controlDataChanged();
+        emit controlDataChanged(control_data_);
     }
 }
 

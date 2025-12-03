@@ -30,12 +30,16 @@ JetBot::~JetBot(){
         video_receiver_fpv_.run();
         //video_receiver_lidar_.run();
 
+        //Update for joystick and gui commands:
         jetbot_loop_thread_ = std::thread([this] {
             while(is_running_){
                 if(joystick_handler_.try_get_motion_command(motion_command_)){
                     server_.setMotionCommand(motion_command_);
                 }
-                //TODO: add conditional variable.
+                if(update_gui_control_data_){
+                    server_.setMotionCommand(motion_command_);
+                    update_gui_control_data_=false;
+                }
             }
         });
 
@@ -44,9 +48,7 @@ JetBot::~JetBot(){
             while(is_running_){
                 {
                     std::unique_lock<std::mutex> lock(gui_update_mutex);
-                    if(!update_gui_control_data_){
-                        update_gui_control_data_= true;
-                    }
+                    
                     if (server_.tryGetJetbotData(jetbot_data_)){
                         update_gui_display(jetbot_data_); 
                     }
@@ -58,14 +60,14 @@ JetBot::~JetBot(){
 
     void JetBot::gui_control_data_set(GUI::ControlData control_data){
         std::unique_lock<std::mutex> lock(gui_update_mutex);
-
-        if (update_gui_control_data_){
+        std::cout << "on gui control data set\n\r";
+        if (!update_gui_control_data_){
             gui_control_data_ = control_data;
             motion_command_.desired_speed = control_data.desired_speed;
             motion_command_.armed_or_disarmed = control_data.armed_or_disarmed;
             motion_command_.detection_mode = control_data.detection_mode.toStdString();
         } 
-        update_gui_control_data_ = false; //flag to allow the thread update_gui_thread_ to update the control data
+        update_gui_control_data_ = true; //flag to allow the thread update_gui_thread_ to update the control data
     }
 
     void JetBot::update_gui_display(data::JetbotData jetbot_data){

@@ -46,7 +46,7 @@ signals:
     void speedChanged(float newSpeed);
     void modeChanged(bool newMode);
     void detectionModeChanged(QString detectionMode);
-    void controlDataChanged();
+    void controlDataChanged(GUI::ControlData controlData);
 private: 
     QString ip_address_ = "JetBot User Interface"; // IP address set purely for displaying the ip on the GUI (Display only)
     float desired_speed_; 

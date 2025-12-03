@@ -21,7 +21,6 @@ JoystickHandler::~JoystickHandler(){
     joystick_handler_thread.join();
 }
 
-
 void JoystickHandler::run(){
     joystick_handler_thread = std::thread([this](){
         while(running_){

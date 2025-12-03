@@ -48,7 +48,7 @@ class JetBot : public QObject{
 
         GUI::DisplayData gui_display_data_;
         std::mutex gui_update_mutex;
-
+        
         JoystickHandler joystick_handler_;
         VideoReceiver video_receiver_fpv_;
         VideoReceiver video_receiver_lidar_;
