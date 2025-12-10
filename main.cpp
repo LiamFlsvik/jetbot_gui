@@ -42,8 +42,7 @@ int main(int argc, char *argv[])
     
     engine.load(QUrl(QStringLiteral("qrc:/gui_uri/qml/Main.qml")));
     QQmlContext *rootContext = engine.rootContext();
-
-
+    
     return app.exec();
     
 }

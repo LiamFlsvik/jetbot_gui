@@ -39,10 +39,23 @@ ApplicationWindow {
         }
 
         DisplayMap {
+            id:map
             anchors.top:displayCamera_.top
             anchors.right:displayCamera_.right
             height:parent.height*0.2
             width:parent.height*0.2
+             HoverHandler{
+                onHoveredChanged: {
+                    if(hovered){
+                        map.height = parent.parent.height*0.4;
+                        map.width = parent.parent.height*0.4;
+                    }
+                    else{
+                        map.height = parent.parent.height*0.2;
+                        map.width = parent.parent.height*0.2;
+                        }
+                    }
+                }
         }
 
         Modes{
@@ -57,8 +70,8 @@ ApplicationWindow {
             id:speedIndicator_
             anchors.bottom:bottomBar.top
             anchors.right: background.right
-            width: parent.width*0.2
-            height: parent.width*0.2
+            width: parent.width*0.15
+            height: parent.width*0.15
         }
         DesiredSpeedDial{
             id:speed_dial;

@@ -15,7 +15,7 @@ class Backend : public QObject {
     Q_PROPERTY(float currentSpeed READ getCurrentSpeed NOTIFY currentSpeedChanged)
     
     //For control
-    //Q_PROPERTY(float simulatorMode READ getSimulatorMode WRITE setSimulatorMode NOTIFY simulatorModeChanged)
+    Q_PROPERTY(float simulatorMode WRITE setSimulatorMode NOTIFY simulatorModeChanged)
     Q_PROPERTY(float arm READ getArmMode WRITE setArmMode NOTIFY armChanged)
     Q_PROPERTY(float desiredSpeed READ getDesiredSpeed WRITE setDesiredSpeed NOTIFY speedChanged)
     Q_PROPERTY(bool manualMode READ getMode WRITE setMode NOTIFY modeChanged)
@@ -32,7 +32,6 @@ public:
     float getCurrentSpeed();
     bool getArmMode() const;
     GUI::ControlData getControlData();
-    //bool getSimulatorMode() const;
 public slots:
     //To be sent to JetBot
     void setMode(const bool mode);
@@ -42,10 +41,10 @@ public slots:
     //Received from JetBot
     void setIP(const QString ipAddress);
     void setDisplayData(const GUI::DisplayData display_data);
-    //void setSimulatorMode(const bool simulator_mode);
+    void setSimulatorMode(const bool simulator_mode);
 
 signals:
-    //void simulatorModeChanged(bool simulator_mode);
+    void simulatorModeChanged(bool simulator_mode);
     void armChanged(bool arm_mode);
     void currentSpeedChanged(float current_speed_);
     void ipChanged(QString newIP);
@@ -55,10 +54,10 @@ signals:
     void controlDataChanged(GUI::ControlData controlData);
 private: 
     QString ip_address_ = "JetBot User Interface"; // IP address set purely for displaying the ip on the GUI (Display only)
-    float desired_speed_{}; 
-    bool arm_{};
-    float current_speed_{}; // Jetbot Speed (for display only)
-    bool mode_{}; // Jetbot mode set by user; Autonomous or manual.
+    float desired_speed_{0.5}; 
+    bool arm_{true};
+    float current_speed_{0}; // Jetbot Speed (for display only)
+    bool mode_{true}; // Jetbot mode set by user; Autonomous or manual.
     int battery_percentage_{}; // Percentage of current battery.
     std::string detection_mode_{}; //Machine vision type eg face detection, canny edge or something else
     mutable std::mutex display_data_mutex_;

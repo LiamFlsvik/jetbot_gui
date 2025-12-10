@@ -41,7 +41,7 @@ void Backend::setArmMode(bool arm_mode) {
         emit controlDataChanged(control_data_);
     }
 }
-/*
+
 void Backend::setSimulatorMode(bool simulator_mode){
     bool modified = false;
     {
@@ -53,7 +53,7 @@ void Backend::setSimulatorMode(bool simulator_mode){
         //emit controlDataChanged(control_data_);
     }
 }
-*/
+
 
 void Backend::setDetectionMode(const QString detectionMode){
     bool modified = false;
@@ -103,11 +103,9 @@ QString Backend::getIP() const {
 bool Backend::getMode() const{
     return mode_;
 }
-/*
-bool Backend::getSimulatorMode() const{
-    return 
-}
-*/
+
+
+
 
 int Backend::getBatteryPercentage() const{
     return battery_percentage_;
@@ -133,7 +131,6 @@ void Backend::setDisplayData(const GUI::DisplayData display_data){
         }
         if(current_speed_ != display_data.current_speed){
             current_speed_= display_data.current_speed;
-            qDebug() << "current speed:" << current_speed_;
             current_speed_changed = true;
         }
     }

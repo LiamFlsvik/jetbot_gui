@@ -10,7 +10,7 @@ Rectangle{
     width:parent.width;
     height:parent.height;
     radius: 10
-
+    
         ColumnLayout{
             spacing: 2
             anchors.fill: parent
@@ -63,7 +63,7 @@ Rectangle{
             }
             CustomSwitch{
                 id: switch2
-                text: "SimulatorMode"
+                text: "Simulation Mode"
                 Layout.alignment: Qt.AlignLeft
                 Layout.fillWidth: true
                 width:parent.width
