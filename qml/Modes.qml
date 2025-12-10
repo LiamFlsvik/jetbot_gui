@@ -50,8 +50,8 @@ Rectangle{
                 model: ListModel {
                     id: model
                     ListElement { vision_mode: "Linefollowing" }
-                    ListElement { vision_mode: "none" }
-                    ListElement { vision_mode: "none" }
+                    ListElement { vision_mode: "mode 2" }
+                    ListElement { vision_mode: "mode 3" }
                 }
                 onAccepted: {
                     if (find(editText) === -1)

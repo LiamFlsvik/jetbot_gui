@@ -55,12 +55,12 @@ signals:
     void controlDataChanged(GUI::ControlData controlData);
 private: 
     QString ip_address_ = "JetBot User Interface"; // IP address set purely for displaying the ip on the GUI (Display only)
-    float desired_speed_; 
-    bool arm_;
-    float current_speed_; // Jetbot Speed (for display only)
-    bool mode_; // Jetbot mode set by user; Autonomous or manual.
-    int battery_percentage_; // Percentage of current battery.
-    std::string detection_mode_; //Machine vision type eg face detection, canny edge or something else
+    float desired_speed_{}; 
+    bool arm_{};
+    float current_speed_{}; // Jetbot Speed (for display only)
+    bool mode_{}; // Jetbot mode set by user; Autonomous or manual.
+    int battery_percentage_{}; // Percentage of current battery.
+    std::string detection_mode_{}; //Machine vision type eg face detection, canny edge or something else
     mutable std::mutex display_data_mutex_;
     GUI::DisplayData gui_display_data_;
 

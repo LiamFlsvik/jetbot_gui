@@ -9,7 +9,6 @@ set(CMAKE_AUTORCC ON)
 
 add_compile_definitions(PROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 
-
 find_package(Qt6 6.4 COMPONENTS Quick Qml Widgets REQUIRED)
 
 find_package(Threads REQUIRED)
@@ -36,7 +35,6 @@ FetchContent_Declare(
 		GIT_SHALLOW TRUE
 )
 
-
 FetchContent_MakeAvailable(nlohmann_json glfw asio)
 
 qt_standard_project_setup(REQUIRES 6.4)
@@ -55,8 +53,6 @@ qt_add_executable(GUI
     include/Joystick/JoystickCommands.hpp
     include/Structs/GUIData.hpp
 )
-
-
 
 qt_add_resources(GUI "app_images"
     PREFIX "/"

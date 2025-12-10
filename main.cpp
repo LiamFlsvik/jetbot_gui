@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     
     VideoProvider video_provider;
 
-    //VideoProvider video_provider_lidar; <- So close to add this feature :(
+    VideoProvider video_provider_lidar;
 
     QThread jetbot_thread;
     Backend backend;
@@ -33,10 +33,10 @@ int main(int argc, char *argv[])
     QObject::connect(&backend,&Backend::controlDataChanged,&jetbot,&JetBot::gui_control_data_set);
 
     QObject::connect(&jetbot,&JetBot::frame_changed_fpv,&video_provider,&VideoProvider::updateFrame);
-    //QObject::connect(&jetbot,&JetBot::frame_changed_lidar,&video_provider_lidar,&VideoProvider::updateFrame);
+    QObject::connect(&jetbot,&JetBot::frame_changed_lidar,&video_provider_lidar,&VideoProvider::updateFrame);
 
     engine.addImageProvider("videoprovider", &video_provider);
-    //engine.addImageProvider("videoprovider_lidar", &video_provider_lidar);
+    engine.addImageProvider("videoprovider_lidar", &video_provider_lidar);
 
     engine.rootContext()->setContextProperty("backend",&backend);
     

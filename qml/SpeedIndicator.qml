@@ -6,7 +6,7 @@ Item {
     property real min_speed: 0
     property real min_angle: 0
     property real max_angle: 90
-    property real speed: 1;
+    property real speed: 0;
     property real angle_offset: -90
     Image{
         id: speedometer_background

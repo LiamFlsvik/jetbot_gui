@@ -5,5 +5,5 @@ struct JoystickCommands{
     float right_stick_y;
     float left_trigger;
     float right_trigger;
-
 };
+

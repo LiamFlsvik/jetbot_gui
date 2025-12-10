@@ -13,22 +13,22 @@ Rectangle{
         width: parent.width
         height: parent.height
 
-        //Image {
-        //    id: lidarImage
-        //    anchors.fill: parent
-        //    source: "image://videoprovider_lidar/frame"
-        //    cache: false
-        //    fillMode: Image.PreserveAspectCrop
-        //    
-        //    Timer {
-        //        interval: 10
-        //        running: true
-        //        repeat: true
-        //        onTriggered: {
-        //            videoImage.source = "image://videoprovider_lidar/frame?t=" + Date.now();
-        //        }
-        //    }
-        //}
+        Image {
+            id: lidarImage
+            anchors.fill: parent
+            source: "image://videoprovider_lidar/frame"
+            cache: false
+            fillMode: Image.PreserveAspectCrop
+            
+            Timer {
+                interval: 10
+                running: true
+                repeat: true
+                onTriggered: {
+                    lidarImage.source = "image://videoprovider_lidar/frame?t=" + Date.now();
+                }
+            }
+        }
         
     }
 }

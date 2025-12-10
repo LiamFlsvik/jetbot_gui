@@ -29,7 +29,7 @@ JetBot::~JetBot(){
         server_thread_ = std::thread([this] {this->server_.listener(this->port_);}); 
         joystick_handler_.run();
         video_receiver_fpv_.run();
-        //video_receiver_lidar_.run();
+        video_receiver_lidar_.run();
 
         //Update for joystick and gui commands:
         jetbot_loop_thread_ = std::thread([this] {
@@ -62,7 +62,6 @@ JetBot::~JetBot(){
 
     void JetBot::gui_control_data_set(GUI::ControlData control_data){
         std::unique_lock<std::mutex> lock(gui_update_mutex);
-        std::cout << "on gui control data set\n\r";
         if (!update_gui_control_data_){
             gui_control_data_ = control_data;
             motion_command_.armed_or_disarmed = true;
@@ -75,7 +74,6 @@ JetBot::~JetBot(){
     }
 
     void JetBot::update_gui_display(data::JetbotData jetbot_data){
-        //Currently only "dummy data" to test the GUI
         gui_display_data_.ip = QString::fromStdString("JetbotIP");
         gui_display_data_.current_speed =std::sqrt(std::pow(jetbot_data.sensorData.imu.acc_x,2)+std::pow(jetbot_data.sensorData.imu.acc_y,2)+std::pow(jetbot_data.sensorData.imu.acc_z,2));
         gui_display_data_.battery_percentage = 100;
