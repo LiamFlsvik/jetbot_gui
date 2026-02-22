@@ -1,20 +1,20 @@
 # Jetbot GUI
-The goal of this project is to create a graphical user interface (GUI) that is useful when operating the Jetbot, providing an intuitive visual interface for control, monitoring, and potentially configuration.
+The goal of this project is to create a graphical user interface (GUI) that is useful when operating the Jetbot, providing an intuitive visual interface for control, monitoring, and configuration of various different parameters. The GUI is designed with a multi-threaded architecture to allow for such that both visual and control elements can be handled in real-time without hindering operation.
 
+The project was developed in the university course [AIS2203](https://www.ntnu.no/studier/emner/AIS2203#tab=omEmnet) and is part of a larger project.
 
 
 ## Features
 
-* Toggle between manual control and autonomy mode.
+* Toggle between operating modes: manual control and autonomy mode.
 
-* Displays Real-Time video
+* Displays Real-Time video (UDP)
 
-* Visualizes LiDAR measurements
+* Visualizes LiDAR measurements (UDP), or any other desired map/image.
 
-#### Future features
-* Display battery percentage
-* Take Screenshots
-* 
+* Joystick Controller interface
+
+
 
 ![Image of GUI](readme_images/jetbot_gui.png)
 
@@ -29,6 +29,8 @@ The goal of this project is to create a graphical user interface (GUI) that is u
 ### Prerequisites
 
 * A C++ compiler such as Clang, GCC or MSVC
+
+* C++ 23
 
 * CMake 3.15 or higher
 
