@@ -1,5 +1,5 @@
 # Jetbot GUI
-The goal of this project is to create a graphical user interface (GUI) that is useful when operating the Jetbot, providing an intuitive visual interface for control, monitoring, and configuration of various different parameters. The GUI is designed with a multi-threaded architecture to allow for such that both visual and control elements can be handled in real-time without hindering operation.
+The goal of this project is to create a graphical user interface (GUI) that is useful when operating the Jetbot, providing an intuitive visual interface for control, monitoring, and configuration of various different parameters. The GUI is designed with a multi-threaded architecture such that visual elements and controls are handled in real-time without hindering operation.
 
 The project was developed in the university course [AIS2203](https://www.ntnu.no/studier/emner/AIS2203#tab=omEmnet) and is part of a larger project.
 
